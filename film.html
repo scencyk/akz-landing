@@ -1,0 +1,1442 @@
+<!doctype html>
+<html lang="pl">
+<script>document.documentElement.classList.add('js', 'is-preloading')</script>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#180613">
+<title>Akademia Kardiologii Zabiegowej 2026 (wariant: film)</title>
+<meta name="description" content="Przenieś się do sali zabiegowej. Bezpłatny kurs kardiologii interwencyjnej nagrany na prawdziwych zabiegach, klasycznie oraz w 360° i VR. Premiera w listopadzie 2026.">
+<meta property="og:title" content="Akademia Kardiologii Zabiegowej 2026">
+<meta property="og:image" content="media/hero360-poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* AKZ, poster hero with the 360° room as a window. Brand from Figma "Branding" (AKZ v4). */
+:root {
+  --burgundy: #44001B;
+  --plum: #54104F;
+  --violet: #4A29DD;
+  --violet-deep: #3A1DB8;
+  --paper: #F7F4F7;
+  --ink: #23081C;
+  --muted: #6A5565;
+  --rule: #E5DAE3;
+  --font: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gutter: clamp(20px, 5vw, 72px);
+  /* motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --brand-field:
+    radial-gradient(55% 75% at 22% 58%, #4A29DD 0%, rgba(74,41,221,.55) 45%, rgba(74,41,221,0) 75%),
+    radial-gradient(45% 70% at 62% 30%, rgba(84,16,79,.95) 0%, rgba(84,16,79,0) 75%),
+    linear-gradient(90deg, #3B0F63 0%, #4A0A45 55%, #44001B 100%);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scrollbar-gutter: stable; -webkit-tap-highlight-color: transparent; }
+/* controls: click fires without the double-tap wait, and a long press doesn't select their labels */
+button, a, [role="button"] { touch-action: manipulation; }
+button, .btn { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--burgundy); color: var(--ink); font: 400 17px/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul { margin: 0; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; border-radius: 4px; }
+.dark :focus-visible { outline-color: #fff; }
+.wrap { width: 100%; max-width: 980px; margin-inline: auto; padding-inline: var(--gutter); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px;
+  font: 500 17px/1 var(--font); letter-spacing: -.01em; text-decoration: none; white-space: nowrap; border: 0; cursor: pointer; /* <button>s otherwise get the UA's outset border */
+  transition: background-color .15s ease, transform 160ms var(--ease-out); -webkit-tap-highlight-color: transparent;
+}
+.btn:active { transform: scale(0.97); }
+.btn-light { background: #fff; color: var(--burgundy); }
+@media (hover: hover) and (pointer: fine) { .btn-light:hover { background: #F1E9F7; } }
+
+.btn-ink { background: var(--ink); color: #fff; }
+@media (hover: hover) and (pointer: fine) { .btn-ink:hover { background: var(--violet-deep); } }
+
+/* ---------- Hero: a typographic poster with the room as a window ---------- */
+.hero { position: relative; isolation: isolate; overflow: hidden; overflow: clip; background: var(--paper); min-height: calc(100vh - 76px); min-height: calc(100svh - 76px); display: grid; grid-template-rows: auto 1fr; padding: max(28px, env(safe-area-inset-top)) var(--gutter) clamp(56px, 10vh, 112px); }
+.hero-bar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; max-width: 1240px; width: 100%; margin-inline: auto; }
+.lockup { --mark: clamp(74px, 6.2vw, 108px); display: flex; align-items: flex-start; gap: calc(var(--mark) * .105); text-decoration: none; }
+.lockup img { display: block; height: auto; }
+.lockup .mark { width: var(--mark); }
+.lockup .name { width: calc(var(--mark) * .5215); }
+.remedium { width: clamp(96px, 8vw, 128px); height: auto; display: block; }
+.hero-grid { max-width: 1240px; width: 100%; margin: clamp(24px, 4vh, 48px) auto 0; align-self: center; align-content: center; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 80px); align-items: center; }
+.hero h1 { font-size: clamp(34px, 3vw + 22px, 56px); line-height: 1.02; font-weight: 500; letter-spacing: -.04em; text-wrap: balance; max-width: 11ch; }
+.hero-lede { margin-top: clamp(16px, 2.4vh, 24px); max-width: 46ch; font-size: clamp(15px, 1.1vw, 17px); line-height: 1.5; color: var(--on-muted, var(--muted)); }
+.hero .notify { margin-top: clamp(24px, 4vh, 36px); }
+
+/* The window: the room in the brand treatment, drifting slowly. Opens the full 360° view. */
+/* press feedback on the whole card, so the rounded edge moves with it */
+.window-wrap:has(.window:active) { transform: scale(0.985); }
+.window-wrap { transition: transform 160ms var(--ease-out); position: relative; aspect-ratio: 4 / 5; max-height: 62vh; width: 100%; justify-self: end; border-radius: 24px; overflow: hidden; background: var(--burgundy); isolation: isolate; }
+.window { position: absolute; inset: 0; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; color: #fff; text-align: left; font: inherit; -webkit-tap-highlight-color: transparent; }
+.view { position: absolute; inset: 0; }
+.view canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity .8s ease, transform 600ms var(--ease-out); }
+.view canvas.ready { opacity: 1; }
+@media (hover: hover) and (pointer: fine) { .window:hover canvas { transform: scale(1.03); } }
+.window-label { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 14px; padding: clamp(18px, 2vw, 26px);
+  background: linear-gradient(to top, rgba(30,0,20,.55), rgba(30,0,20,0)); }
+.window-label .ring { width: 48px; height: 48px; flex: none; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.7); display: grid; place-items: center; transition: background-color .2s ease; }
+@media (hover: hover) and (pointer: fine) { .window:hover .ring { background: rgba(255,255,255,.18); } }
+.window-label strong { display: block; font-size: 19px; font-weight: 500; letter-spacing: -.015em; }
+.window-label small { display: block; font-size: 13.5px; color: rgba(255,255,255,.8); }
+.pause { position: absolute; top: 14px; right: 14px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.45); background: rgba(20,0,12,.3); color: #fff;
+  display: grid; place-items: center; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.pause svg { display: block; }
+
+/* Full-screen room */
+.immersive { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #0E0509; color: #fff; overflow: hidden; }
+.immersive::backdrop { background: #0E0509; }
+.immersive[open] { animation: open-room 350ms var(--ease-out); }
+@keyframes open-room { from { opacity: 0; transform: scale(.96); } }
+.immersive .view { cursor: grab; touch-action: none; outline: none; }
+.immersive { overscroll-behavior: contain; }
+.immersive .view.dragging { cursor: grabbing; }
+.immersive-bar { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: max(18px, env(safe-area-inset-top)) var(--gutter) 0; pointer-events: none; }
+.immersive-bar > * { pointer-events: auto; }
+.immersive-bar img { width: 72px; height: auto; display: block; }
+.close { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.45); background: rgba(20,0,12,.35); color: #fff; font: 500 15px/1 var(--font); cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.immersive .pause { top: auto; bottom: max(20px, env(safe-area-inset-bottom)); right: var(--gutter); }
+.hint { position: absolute; left: 50%; bottom: max(28px, env(safe-area-inset-bottom)); transform: translateX(-50%); padding: 10px 16px; border-radius: 999px; background: rgba(20,0,12,.45);
+  font-size: 14px; white-space: nowrap; pointer-events: none; transition: opacity .6s ease; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.hint.gone { opacity: 0; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-rows: auto auto; }
+  .hero-grid { grid-template-columns: 1fr; align-items: start; gap: 24px; }
+  /* phones: the window comes right after the headline, details and button below it */
+  .hero-copy { display: contents; }
+  .hero h1 { order: 1; } .hero-lede { order: 2; } .window-wrap { order: 3; } .hero .notify { order: 4; margin-top: 0; }
+  .window-wrap { aspect-ratio: 4 / 3; max-height: none; justify-self: stretch; }
+}
+@media (prefers-reduced-motion: reduce) { .immersive[open] { animation: none; } .view canvas { transition: opacity .8s ease; } .window:hover canvas { transform: none; } }
+
+/* ---------- Screens 3-4 on solid ground ---------- */
+/* Program: the dark middle of the page. Six sessions as separate panels on ink. */
+.program { --on: #F6EFF4; --on-muted: rgba(246,239,244,.64); --panel: #31112A; --panel-hover: #3E1736; --lilac: #BBA9FF;
+  position: relative; isolation: isolate; background: var(--ink); color: var(--on); padding-block: clamp(64px, 10vw, 128px); }
+/* dot field behind the sessions; dots near the cursor light up and lean away from it */
+.dots { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+.program h2 { font-size: clamp(24px, 2.4vw, 32px); line-height: 1.05; font-weight: 600; letter-spacing: -.03em; }
+.program-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+.program-head p { font-size: 15px; color: var(--on-muted); }
+.entries { list-style: none; padding: 0; margin-top: clamp(28px, 4vw, 44px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 1.2vw, 14px); }
+.entry {
+  display: flex; flex-direction: column; gap: 10px; height: 100%; padding: clamp(18px, 2vw, 24px) clamp(18px, 2vw, 24px) clamp(20px, 2.4vw, 28px);
+  border-radius: 18px; background: var(--panel); color: var(--on); text-decoration: none;
+  transition: background-color .2s ease, transform 250ms var(--ease-out); -webkit-tap-highlight-color: transparent;
+}
+.entry-top { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; color: var(--on-muted); margin-bottom: 6px; }
+.entry-no { font-variant-numeric: tabular-nums; color: var(--lilac); }
+.entry-name { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.15; font-weight: 500; letter-spacing: -.025em; text-wrap: balance; margin-bottom: 18px; }
+/* the procedure sits under its own hairline so name and case never run together */
+.entry-case { margin-top: auto; padding-top: 14px; border-top: 1px solid rgba(246,239,244,.14); font-size: 14.5px; line-height: 1.4; color: var(--on-muted); }
+.entry-case span { display: block; margin-bottom: 2px; font-size: 12.5px; color: var(--lilac); }
+@media (hover: hover) and (pointer: fine) { .entry:hover { background: var(--panel-hover); transform: translateY(-2px); } }
+.program .note { color: var(--on-muted); }
+.program :focus-visible { outline-color: #fff; }
+@media (max-width: 860px) { .entries { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) {
+  .entries { grid-template-columns: 1fr; }
+  .entry-case { margin-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .entry { transition: background-color .2s ease; } .entry:hover { transform: none; } }
+
+/* Partners: a band of one-colour logos drifting right to left. Each logo's --k is tuned by eye so heavy marks
+   (Philips, Meril) sit smaller and light or detailed ones (Hemolens, J&J, Adamed) larger, for equal optical weight. */
+.partners { background: var(--paper); display: flex; align-items: center; gap: clamp(20px, 3vw, 40px); padding: 22px 0 22px var(--gutter);
+  border-block: 1px solid var(--rule); overflow: hidden; }
+.partners h2 { flex: none; font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.marquee { display: flex; min-width: 0; flex: 1;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); }
+.logos { list-style: none; padding: 0 clamp(36px, 5vw, 64px) 0 0; margin: 0; flex: none; display: flex; align-items: center; gap: clamp(36px, 5vw, 64px);
+  animation: marquee 40s linear infinite; }
+.logos img { --u: clamp(22px, 2.2vw, 30px); display: block; height: calc(var(--u) * var(--k)); width: auto; max-width: none; }
+@keyframes marquee { to { transform: translateX(-100%); } }
+@media (hover: hover) { .marquee:hover .logos { animation-play-state: paused; } }
+.marquee:focus-within .logos { animation-play-state: paused; }
+@media (max-width: 520px) { .partners { flex-direction: column; align-items: stretch; gap: 14px; padding-left: 0; } .partners h2 { padding-left: var(--gutter); } .logos img { --u: 20px; } }
+/* no motion: show the logos as a wrapped row instead */
+@media (prefers-reduced-motion: reduce) {
+  .logos { animation: none; flex-wrap: wrap; flex: 1; row-gap: 20px; }
+  .logos[aria-hidden="true"] { display: none; }
+  .marquee { -webkit-mask-image: none; mask-image: none; }
+}
+
+/* Formats: one course, with the 360° / VR version nested inside it as an extension */
+.formats { background: var(--paper); padding-block: clamp(56px, 8vw, 104px) 0; }
+.formats h2 { font-size: clamp(24px, 2.4vw, 32px); line-height: 1.1; font-weight: 600; letter-spacing: -.03em; text-wrap: balance; max-width: 24ch; }
+.format { margin-top: clamp(24px, 3vw, 36px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(10px, 1.2vw, 14px);
+  padding: clamp(10px, 1.2vw, 14px); border-radius: 26px; background: #fff; box-shadow: inset 0 0 0 1px var(--rule); }
+.format-base { display: flex; flex-direction: column; gap: 10px; padding: clamp(14px, 2vw, 24px); }
+.format-plus { position: relative; display: flex; flex-direction: column; gap: 10px; padding: clamp(22px, 2.6vw, 32px); border-radius: 18px;
+  background: var(--burgundy); background-image: var(--brand-field); color: #F6EFF4; }
+.format-icon { color: var(--violet); margin-bottom: 8px; }
+/* the "+" sits on the seam between the two parts, so the extension reads as attached to the course */
+.plus-mark { position: absolute; left: calc(-1 * clamp(10px, 1.2vw, 14px) / 2 - 18px); top: clamp(22px, 2.6vw, 32px); width: 36px; height: 36px; border-radius: 50%;
+  display: grid; place-items: center; background: #fff; color: var(--violet); font-size: 22px; line-height: 1; font-weight: 500; box-shadow: 0 0 0 1px var(--rule), 0 6px 16px rgba(40,0,25,.12); }
+.format h3 { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.15; font-weight: 500; letter-spacing: -.02em; }
+.format-plus .format-icon { color: #BBA9FF; }
+.format p { font-size: 15.5px; line-height: 1.5; color: var(--muted); max-width: 46ch; }
+.format-plus p { color: rgba(246,239,244,.8); }
+.format-plus .format-note { margin-top: auto; padding-top: 14px; color: #fff; font-weight: 500; }
+@media (max-width: 860px) {
+  .format { grid-template-columns: 1fr; }
+  .plus-mark { left: clamp(22px, 2.6vw, 32px); top: -18px; }
+  .format-plus { padding-top: 34px; }
+}
+
+/* Experts: three faces of the course, quiet and typographic */
+.experts { background: var(--paper); padding-block: clamp(48px, 7vw, 88px); }
+.experts h2 { font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.expert-list { list-style: none; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); }
+.expert { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding-top: 20px; border-top: 1.5px solid var(--ink); }
+.expert img { width: clamp(96px, 9vw, 128px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; display: block; margin-bottom: 14px; }
+.expert-name { font-size: 17px; line-height: 1.25; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+.expert-role { font-size: 14px; line-height: 1.35; color: var(--muted); }
+@media (max-width: 860px) {
+  .expert-list { grid-template-columns: 1fr; gap: 0; }
+  .expert { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; row-gap: 2px; align-items: center; padding-block: 16px; border-top-width: 1px; }
+  .expert:first-child { border-top-width: 1.5px; }
+  .expert img { grid-row: 1 / span 2; width: 72px; margin: 0; }
+  .expert-name { align-self: end; } .expert-role { align-self: start; }
+}
+
+/* Dark hero: deep ink, light type; the window glows against it */
+.hero--dark { --on: #F6EFF4; --on-muted: rgba(246,239,244,.62); background: #180613; color: var(--on); }
+/* depth: a soft brand glow behind the window and a darker fall-off at the edges, like a fluoroscopy field */
+.hero--dark::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60% 70% at 78% 42%, rgba(74,41,221,.28), rgba(74,41,221,0) 70%),
+    radial-gradient(50% 60% at 12% 85%, rgba(84,16,79,.45), rgba(84,16,79,0) 70%),
+    radial-gradient(120% 100% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%); }
+/* grain, like the quantum noise of an X-ray image; sits over the vessels, under the type */
+.hero--dark::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .24;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0 / 260px 260px; }
+.hero--dark .window-wrap { box-shadow: 0 0 0 1px rgba(246,239,244,.1), 0 30px 80px rgba(74,41,221,.18); }
+
+/* Ambient light: the window lights up the dark hero in the colour of what it is showing (set live from the video).
+   Desktop only: on phones the window sits in the flow. */
+.ambient { grid-column: 2; grid-row: 1; align-self: center; justify-self: end; z-index: -1; pointer-events: none;
+  width: 100%; aspect-ratio: 4 / 5; max-height: 62vh; border-radius: 40%; background-color: rgb(92, 52, 200);
+  filter: blur(80px); opacity: .5; transform: scale(1.15);
+  transition: background-color 4s ease; }
+/* the window shares its grid cell with the ambient light */
+.window-wrap { grid-column: 2; grid-row: 1; }
+@media (max-width: 860px) { .ambient { display: none; } .window-wrap { grid-column: auto; grid-row: auto; } }
+
+/* keyboard: skip straight to the programme */
+.skip { position: absolute; left: 12px; top: -60px; z-index: 200; padding: 10px 16px; border-radius: 999px; background: #fff; color: var(--ink); font-size: 14px; text-decoration: none; }
+.skip:focus { top: 12px; }
+
+/* Session details */
+.sessions { margin-top: 48px; display: grid; gap: 40px; }
+html.js .sessions { display: none; }
+.session h3, .dialog-body h3 { font-size: clamp(20px, 1.9vw, 24px); line-height: 1.15; font-weight: 600; letter-spacing: -.02em; text-wrap: balance; margin-bottom: 20px; }
+.talks { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+.talks li { font-size: 16.5px; line-height: 1.4; }
+.talks .kind { display: block; font-size: 13px; color: var(--violet); margin-bottom: 2px; }
+.session-dialog .talks .kind { color: #BBA9FF; }
+.session-dialog .talks .who { color: rgba(246,239,244,.64); }
+.session-dialog :focus-visible { outline-color: #fff; }
+.talks .who { display: block; font-size: 14.5px; color: var(--muted); margin-top: 2px; }
+
+.session-dialog {
+  width: min(640px, calc(100% - 32px)); max-height: min(86vh, 760px); padding: 0; border: 0; border-radius: 24px;
+  background: #2A0B23; color: #F6EFF4; box-shadow: 0 40px 100px rgba(10,0,8,.6);
+}
+.session-dialog::backdrop { background: rgba(14,2,10,.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.session-dialog[open] { animation: rise 250ms var(--ease-out); }
+@keyframes rise { from { opacity: 0; transform: scale(.96); } }
+.session-dialog::backdrop { animation: fade 250ms var(--ease-out); }
+@keyframes fade { from { opacity: 0; } }
+.dialog-body { padding: clamp(28px, 4vw, 44px); padding-right: clamp(56px, 6vw, 72px); }
+.dialog-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(246,239,244,.25); background: transparent; color: #F6EFF4; display: grid; place-items: center; cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .session-dialog[open] { animation: none; } }
+.note { margin-top: 18px; font-size: 14px; color: var(--muted); }
+
+.signup { position: relative; isolation: isolate; overflow: hidden; background: var(--burgundy);
+  background-image: radial-gradient(45% 70% at 62% 30%, rgba(84,16,79,.95) 0%, rgba(84,16,79,0) 75%), linear-gradient(90deg, #3B0F63 0%, #4A0A45 55%, #44001B 100%);
+  color: #fff; padding-block: clamp(96px, 16vw, 200px) clamp(56px, 8vw, 96px); }
+/* the violet light of the brand field, as a layer: rests where the poster has it, drifts after the cursor */
+.signup-glow { position: absolute; z-index: -2; left: -33%; top: -17%; width: 110%; height: 150%; pointer-events: none;
+  background: radial-gradient(50% 50% at 50% 50%, #4A29DD 0%, rgba(74,41,221,.55) 45%, rgba(74,41,221,0) 75%); }
+.signup .vessels { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+.signup h2 { font-size: clamp(28px, 3.4vw, 46px); line-height: 1.04; font-weight: 500; letter-spacing: -.035em; max-width: 20ch; text-wrap: balance; }
+.signup .meta { margin-top: 24px; font-size: 17px; color: rgba(255,255,255,.8); max-width: 46ch; }
+.signup .notify { margin-top: 32px; }
+.signup-foot { margin-top: clamp(80px, 12vw, 140px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; font-size: 14px; color: rgba(255,255,255,.82); }
+/* the wordmark has no descenders, so its bottom edge is its baseline: align it to the label's baseline */
+.signup-foot span { display: flex; align-items: baseline; gap: 10px; }
+.signup-foot img { width: 84px; height: auto; display: block; }
+
+/* Sign-up bar: appears once the hero is behind you, hides at the sign-up section */
+.bar {
+  position: fixed; z-index: 20; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); width: min(560px, calc(100% - 2 * var(--gutter)));
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 22px; border-radius: 999px; color: #fff;
+  background: linear-gradient(90deg, rgba(74,41,221,.82), rgba(68,0,27,.84));
+  -webkit-backdrop-filter: blur(18px) saturate(1.5); backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid rgba(255,255,255,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 14px 40px rgba(40,0,25,.3);
+  transform: translate(-50%, calc(100% + 32px)); visibility: hidden;
+  transition: transform 500ms var(--ease-drawer), visibility 0s linear 500ms;
+}
+.bar.shown { transform: translate(-50%, 0); visibility: visible; transition: transform 500ms var(--ease-drawer), visibility 0s; }
+.bar img { width: 56px; height: auto; display: block; }
+.bar .btn { min-height: 44px; padding: 0 22px; }
+@media (max-width: 520px) { .bar .btn { flex: 1 1 auto; } .bar-long { display: none; } .sessions summary { grid-template-columns: minmax(0, 1fr) 1ch; row-gap: 4px; } .sessions summary small { grid-row: 2; grid-column: 1; } }
+@media (prefers-reduced-motion: reduce) { .bar, .bar.shown { transition: none; } }
+/* ---------- Page-load entrance: the headline first, then everything else ----------
+   1) "Przenieś się do sali zabiegowej." arrives letter by letter out of a blur (after Motion Primitives' TextEffect,
+      preset "fade-in-blur", per "char"), 2) once it has mostly settled (--after), the rest of the hero follows.
+   CSS keyframes (not JS) so it stays smooth while the 360° video and WebGL load. Never blocks interaction. */
+:root { --title-at: 420ms; --after: calc(var(--title-at) + 900ms); }
+@keyframes rise-in { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes drop-in { from { opacity: 0; transform: translateY(-8px); } }
+@keyframes window-open { from { clip-path: inset(100% 0 0 0 round 24px); } to { clip-path: inset(0 0 0 0 round 24px); } }
+@keyframes settle { from { transform: scale(1.12); } }
+@keyframes char-in { from { opacity: 0; transform: translateY(20px); filter: blur(12px); } }
+
+/* until the script has split the headline into letters, keep it hidden so it doesn't flash in whole first */
+html.js .hero h1:not(.is-split) { opacity: 0; }
+.hero h1 .w { display: inline-block; white-space: nowrap; }
+.hero h1 .ch { display: inline-block; animation: char-in 650ms var(--ease-out) both; animation-delay: calc(var(--title-at) + var(--i) * 22ms); }
+
+.hero-bar { animation: drop-in 600ms var(--ease-out) var(--after) both; }
+.window-wrap { animation: window-open 1000ms var(--ease-in-out) calc(var(--after) + 60ms) both; }
+.window-wrap .view { animation: settle 1400ms var(--ease-out) calc(var(--after) + 60ms) both; }
+.ambient { animation: fade-in 1600ms var(--ease-out) calc(var(--after) + 400ms) both; }
+.hero-lede { animation: rise-in 600ms var(--ease-out) calc(var(--after) + 120ms) both; }
+.hero .notify { animation: rise-in 600ms var(--ease-out) calc(var(--after) + 260ms) both; }
+.window-label, .window-wrap > .pause { animation: rise-in 600ms var(--ease-out) calc(var(--after) + 700ms) both; }
+.partners { animation: fade-in 800ms var(--ease-out) calc(var(--after) + 800ms) both; }
+
+/* reduced motion: no letter-by-letter, no movement; a short fade so the page still arrives gently */
+@media (prefers-reduced-motion: reduce) {
+  :root { --title-at: 0ms; --after: 0ms; }
+  .hero h1 .ch { animation: none; }
+  html.js .hero h1:not(.is-split) { opacity: 1; }
+  .hero h1, .hero-bar, .window-label, .window-wrap > .pause, .hero-lede, .hero .notify, .partners, .ambient { animation: fade-in 200ms ease both; }
+  .window-wrap { animation: fade-in 200ms ease both; }
+  .window-wrap .view { animation: none; }
+  .btn:active { transform: none; }
+}
+/* ---------- Notify form: e-mail + consent, validated on submit, then live; success replaces the form ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.notify { max-width: 460px; }
+.notify-row { display: flex; gap: 6px; padding: 4px; border-radius: 999px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+  transition: box-shadow 160ms var(--ease-out), background-color 160ms var(--ease-out); }
+.notify-row:focus-within { background: rgba(255,255,255,.11); box-shadow: inset 0 0 0 1.5px #BBA9FF; }
+/* hover: the field's edge lights up, the button warms to lilac with a soft glow */
+@media (hover: hover) and (pointer: fine) {
+  .notify-row:hover:not(:focus-within) { background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.34); }
+  .notify-submit { transition: background-color 200ms ease, box-shadow 200ms ease, transform 160ms var(--ease-out); }
+  .notify-submit:hover { background: #ECE5FF; box-shadow: 0 0 0 4px rgba(187,169,255,.22), 0 8px 24px rgba(120,90,255,.3); }
+}
+.notify.is-invalid .notify-row { box-shadow: inset 0 0 0 1.5px #FF9DB3; }
+.notify-input { flex: 1; min-width: 0; height: 40px; padding: 0 14px; border: 0; background: none; color: #fff; font: 400 16px/1 var(--font); outline: none; }
+.notify-input::placeholder { color: rgba(246,239,244,.55); }
+.notify-submit { min-height: 40px; padding: 0 18px; flex: none; font-size: 15px; }
+.notify-submit[aria-busy="true"] { pointer-events: none; }
+.notify-submit[aria-busy="true"] .notify-label::after { content: ""; display: inline-block; width: 13px; height: 13px; margin-left: 9px; vertical-align: -2px; border-radius: 50%;
+  border: 2px solid currentColor; border-right-color: transparent; animation: spin 600ms linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.consent { margin-top: 10px; padding-left: 14px; font-size: 12.5px; line-height: 1.45; color: rgba(246,239,244,.6); }
+.consent a { color: #fff; }
+.notify-msg { min-height: 1.4em; margin-top: 8px; font-size: 14px; color: #FFB8C8; }
+.notify-msg:empty { min-height: 0; margin: 0; }
+.notify-done { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-radius: 18px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+  font-size: 16px; line-height: 1.4; color: #fff; }
+.notify-done svg { flex: none; color: #BBA9FF; }
+.notify-done span { flex: 1; }
+.notify-reset { flex: none; padding: 6px 2px; border: 0; background: none; color: #fff; font: 500 14px/1 var(--font); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.notify-done[hidden] { display: none; }
+/* success: the form steps back with a short blur while the confirmation arrives */
+.notify.is-done > :not(.notify-done) { display: none; }
+.notify.is-done .notify-done { animation: rise-in 400ms var(--ease-out) both; }
+@media (max-width: 520px) {
+  .notify-row { flex-direction: column; gap: 8px; padding: 0; border-radius: 0; background: none; box-shadow: none; }
+  .notify-row:focus-within { background: none; box-shadow: none; }
+  .notify-input { flex: none; height: 48px; padding: 0 20px; border-radius: 999px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.24);
+    transition: box-shadow 160ms var(--ease-out), background-color 160ms var(--ease-out); }
+  .notify-input:focus { background: rgba(255,255,255,.11); box-shadow: inset 0 0 0 1.5px #BBA9FF; }
+  .notify.is-invalid .notify-row { box-shadow: none; }
+  .notify.is-invalid .notify-input { box-shadow: inset 0 0 0 1.5px #FF9DB3; }
+  .notify-submit { width: 100%; min-height: 48px; }
+}
+@media (prefers-reduced-motion: reduce) { .notify.is-done .notify-done { animation: fade-in 200ms ease both; } .notify-submit[aria-busy="true"] .notify-label::after { animation-duration: 1.6s; } }
+/* ================= Variant "film": the 360° room fills the hero and turns slowly ================= */
+.film { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.film .view { position: absolute; inset: 0; }
+/* keep the copy legible: the room falls away to ink behind the centred copy and at the bottom */
+.film::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 62% 58% at 50% 52%, rgba(24,6,19,.78) 0%, rgba(24,6,19,.5) 55%, rgba(24,6,19,.2) 100%),
+    linear-gradient(0deg, rgba(24,6,19,.85) 0%, rgba(24,6,19,0) 35%),
+    linear-gradient(180deg, rgba(24,6,19,.55) 0%, rgba(24,6,19,0) 22%); }
+.hero-grid { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; }
+.hero-copy { max-width: 640px; display: flex; flex-direction: column; align-items: center; }
+.hero-copy h1 { max-width: 12ch; }
+.hero-copy .notify { width: 100%; }
+.hero-copy .consent { padding-left: 0; }
+.hero-copy .notify-done { text-align: left; }
+.room-actions { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: clamp(22px, 3.5vh, 32px); }
+.room-open { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 16px 0 4px; border-radius: 999px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,.3); background: rgba(24,6,19,.35); color: #fff; font: 500 14.5px/1 var(--font);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: background-color .2s ease, transform 160ms var(--ease-out); }
+.room-open .ring { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.14); }
+.room-open:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .room-open:hover { background: rgba(255,255,255,.12); } }
+.room-actions .pause { position: static; width: 40px; height: 40px; }
+@keyframes film-in { from { opacity: 0; transform: scale(1.06); } }
+.film { animation: film-in 1800ms var(--ease-out) both; } /* starts with the veil lifting, so the mark dissolves into the room */
+.room-actions { animation: rise-in 600ms var(--ease-out) calc(var(--after) + 400ms) both; }
+@media (max-width: 860px) {
+  .film::after { background: linear-gradient(0deg, rgba(24,6,19,.95) 0%, rgba(24,6,19,.7) 45%, rgba(24,6,19,.2) 80%), linear-gradient(180deg, rgba(24,6,19,.6) 0%, rgba(24,6,19,0) 25%); }
+  .hero-copy { display: flex; }
+  .hero-copy > * { order: 0 !important; } /* source order; the reorder above is for the window variant */
+  .hero-grid { gap: 0; }
+  .hero-lede { margin-top: 14px; }
+  .hero .notify { margin-top: 24px; }
+  .room-actions { margin-top: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .film, .room-actions { animation: fade-in 200ms ease both; } }
+/* drag the hero background to look around; the page steps aside while you do */
+.hero { cursor: grab; touch-action: pan-y; }
+.hero.is-dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; }
+.hero :is(a, button, input, label, .notify) { cursor: auto; }
+.hero :is(a, button, label) { cursor: pointer; }
+/* the bar and grid themselves carry no entrance animation, so their opacity can transition freely */
+.hero-grid, .hero-bar { transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.film::after { transition: opacity 600ms var(--ease-out); }
+.hero.is-looking :is(.hero-grid, .hero-bar) { opacity: 0; transform: translateY(8px); pointer-events: none; transition-duration: 250ms; }
+.hero.is-looking .film::after { opacity: .25; transition-duration: 250ms; }
+@media (prefers-reduced-motion: reduce) { .hero.is-looking :is(.hero-grid, .hero-bar) { transform: none; } }
+/* ---------- Preloader ----------
+   Seen once per visit (rare tier), masks the room loading (preventing a jarring change).
+   Intro: CSS keyframes. Exit: WAAPI, so it can wait for the room to be ready. */
+.preloader { display: none; }
+html.js .preloader { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: #180613;
+  animation: pre-failsafe 300ms ease 7s forwards; } /* if the script never runs its exit, get out of the way anyway */
+@keyframes pre-failsafe { to { opacity: 0; visibility: hidden; } }
+.pre-group { position: relative; }
+.pre-mark { display: block; width: clamp(120px, 14vw, 180px); height: auto;
+  animation: pre-mark-in 700ms var(--ease-out) 100ms both; }
+@keyframes pre-mark-in { from { clip-path: inset(100% 0 0 0); transform: translateY(12px); } to { clip-path: inset(0 0 0 0); } }
+.pre-star { position: absolute; right: -34px; top: -18px; color: #fff;
+  animation: pre-star-in 600ms var(--ease-out) 450ms both, pre-twinkle 1800ms var(--ease-in-out) 1100ms infinite; }
+@keyframes pre-star-in { from { opacity: 0; transform: scale(.6) rotate(-90deg); } }
+@keyframes pre-twinkle { 0%, 100% { transform: rotate(0deg) scale(1); opacity: 1; } 50% { transform: rotate(45deg) scale(.82); opacity: .7; } }
+
+/* while preloading: no scrolling, and every entrance animation holds at frame 0 */
+html.is-preloading { overflow-y: scroll; }
+html.is-preloading body { height: 100%; overflow: hidden; }
+html.is-preloading :is(.hero, .hero *, .hero *::before, .hero *::after, .hero::before, .hero::after, main, main *) { animation-play-state: paused !important; }
+/* the top bar drops in first, right after the preloader */
+.hero-bar { animation: none; }
+.hero-bar .lockup, .hero-bar .remedium { animation: drop-in 600ms var(--ease-out) 260ms both; }
+@media (prefers-reduced-motion: reduce) {
+  .pre-mark, .pre-star { animation: fade-in 200ms ease both; }
+  .hero-bar .lockup, .hero-bar .remedium { animation: fade-in 200ms ease both; }
+}
+/* hint at the foot of the hero: arrives after the entrance, steps aside while looking, gone for good after the first drag.
+   The outer <p> transitions, the inner <span> runs the entrance, so the two never fight over opacity. */
+.hero-hint { position: absolute; left: 50%; bottom: clamp(14px, 3vh, 28px); transform: translateX(-50%); margin: 0; pointer-events: none;
+  transition: opacity 400ms var(--ease-out); }
+.hero-hint span { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; white-space: nowrap;
+  background: rgba(20,0,12,.45); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); color: rgba(255,255,255,.88); font-size: 14px;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  animation: rise-in 600ms var(--ease-out) calc(var(--after) + 1400ms) both; }
+.hero.is-looking .hero-hint, .hero.has-looked .hero-hint { opacity: 0; transition-duration: 250ms; }
+@media (max-width: 520px) { .hero-hint span { font-size: 13px; padding: 8px 14px; } }
+@media (prefers-reduced-motion: reduce) { .hero-hint span { animation: fade-in 200ms ease both; } }
+/* ---------- Scroll reveal: sections arrive as they come into view (once), in reading order ----------
+   Only with JS (html.reveal-on is set by the script), so without it everything is simply there.
+   fill-mode backwards: hidden until its turn, then the element's own transforms (hover) take over again. */
+@keyframes reveal-up { from { opacity: 0; transform: translateY(22px); } }
+html.reveal-on .reveal:not(.is-in) { opacity: 0; }
+.reveal.is-in { animation: reveal-up 800ms var(--ease-out) calc(var(--d, 0) * 80ms) backwards; }
+/* expert photos: a soft disc while the file loads, then a fade instead of a pop */
+.expert img { background: #E9DEE7; }
+html.reveal-on .expert img { opacity: 0; transition: opacity 500ms var(--ease-out); }
+html.reveal-on .expert img.is-loaded { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .reveal.is-in { animation: fade-in 300ms ease backwards; } }
+</style>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+<a class="skip" href="#program">Przejdź do programu</a>
+
+<!-- Preloader: the AKZ mark and the remedium sparkle while the room loads; both fade before the page arrives -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pre-group">
+    <img class="pre-mark" id="preMark" src="media/akz-mark.svg" width="288" height="116" alt="">
+    <svg class="pre-star" id="preStar" viewBox="440.78 0 44.46 44.46" width="26" height="26"><path d="M485.243 18.7194C474.92 18.7194 466.523 10.3228 466.523 0H459.501C459.501 10.3228 451.104 18.7194 440.782 18.7194V25.7417C451.104 25.7417 459.501 34.1383 459.501 44.4611H466.523C466.523 34.1383 474.92 25.7417 485.243 25.7417V18.7194ZM463.012 31.51C460.775 27.6778 457.565 24.4676 453.733 22.2305C457.565 19.9834 460.765 16.7833 463.012 12.9511C465.259 16.7833 468.459 19.9834 472.292 22.2305C468.459 24.4777 465.259 27.6778 463.012 31.51Z" fill="#fff"/></svg>
+  </div>
+</div>
+
+<header class="hero hero--dark dark" id="top">
+  <!-- The 360° room as the hero's background: brand-tinted, slowly turning. The button below opens the full room. -->
+  <div class="film" aria-hidden="true"><span class="view" id="windowView"></span></div>
+  <div class="hero-bar">
+    <a class="lockup" href="#top" aria-label="Akademia Kardiologii Zabiegowej, na górę strony">
+      <img class="mark" src="media/akz-mark.svg" width="288" height="116" alt="">
+      <img class="name" src="media/akz-name.svg" width="150" height="96" alt="">
+    </a>
+    <img class="remedium" src="media/remedium-logo.svg" width="485" height="84" alt="remedium">
+  </div>
+
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1 id="heroTitle">Przenieś się do sali zabiegowej.</h1>
+      <script>
+        // TextEffect "fade-in-blur" per letter: wrap each word (so lines never break mid-word) and each letter with its index
+        (() => {
+          const h = document.getElementById('heroTitle'), text = h.textContent;
+          if (matchMedia('(prefers-reduced-motion: reduce)').matches) { h.classList.add('is-split'); return; }
+          let i = 0;
+          h.setAttribute('aria-label', text);
+          h.innerHTML = text.split(' ').map((word) =>
+            `<span class="w" aria-hidden="true">${[...word].map((c) => `<span class="ch" style="--i:${i++}">${c}</span>`).join('')}</span>`
+          ).join(' ');
+          h.classList.add('is-split');
+        })();
+      </script>
+      <p class="hero-lede">Bezpłatny kurs kardiologii interwencyjnej, nagrany na prawdziwych zabiegach. Premiera w listopadzie 2026.</p>
+      <form class="notify" data-notify novalidate>
+        <div class="notify-row">
+          <label class="sr-only" for="email-hero">Adres e-mail</label>
+          <input class="notify-input" id="email-hero" type="email" name="email" autocomplete="email" inputmode="email" enterkeyhint="send" autocapitalize="none" spellcheck="false" placeholder="Twój adres e-mail" required aria-describedby="email-hero-msg">
+          <button class="btn btn-light notify-submit" type="submit"><span class="notify-label">Powiadom mnie</span></button>
+        </div>
+        <p class="consent">Wyślemy tylko powiadomienie o premierze. <a href="#">Polityka prywatności</a></p>
+        <p class="notify-msg" id="email-hero-msg" aria-live="polite"></p>
+        <p class="notify-done" role="status" hidden><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.4l2.6 2.6L14 7.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span></span><button class="notify-reset" type="button">Zmień adres</button></p>
+      </form>
+      <div class="room-actions">
+        <button class="room-open" id="openRoom" type="button" aria-haspopup="dialog">
+          <span class="ring" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></span>
+          Rozejrzyj się w 360°
+        </button>
+        <button class="pause" id="pause" type="button" aria-label="Zatrzymaj nagranie">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path class="pause-icon" d="M3 2h3v10H3zM8 2h3v10H8z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <p class="hero-hint" aria-hidden="true"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9l-4 3 4 3M17 9l4 3-4 3M3 12h18"/></svg>Przeciągnij, aby rozejrzeć się po pracowni</span></p>
+</header>
+
+<dialog class="immersive dark" id="immersive" aria-label="Pracownia hemodynamiki, widok 360°">
+  <div class="view" id="immersiveView" tabindex="0" role="img"
+       aria-label="Nagranie 360° z pracowni hemodynamiki w trakcie zabiegu. Przeciągnij lub użyj strzałek, aby się rozejrzeć."></div>
+  <div class="immersive-bar">
+    <img src="media/akz-mark.svg" width="288" height="116" alt="AKZ">
+    <button class="close" type="button" data-close-room>
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Wyjdź z pracowni
+    </button>
+  </div>
+  <p class="hint" id="hint">Przeciągnij, aby rozejrzeć się po pracowni</p>
+  <button class="pause" id="pauseFull" type="button" aria-label="Zatrzymaj nagranie">
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path class="pause-icon" d="M3 2h3v10H3zM8 2h3v10H8z" fill="currentColor"/></svg>
+  </button>
+</dialog>
+
+<main>
+  <section class="partners" aria-labelledby="partnersTitle">
+    <h2 id="partnersTitle">Partnerzy</h2>
+    <div class="marquee">
+      <ul class="logos">
+        <li><img src="media/partners/abbott.png" width="639" height="160" alt="Abbott" style="--k: 0.95" loading="lazy"></li>
+        <li><img src="media/partners/adamed.png" width="187" height="160" alt="Adamed" style="--k: 1.73" loading="lazy"></li>
+        <li><img src="media/partners/celon.png" width="346" height="160" alt="Celon Pharma" style="--k: 1.14" loading="lazy"></li>
+        <li><img src="media/partners/hemolens.png" width="1956" height="160" alt="Hemolens Diagnostics" style="--k: 0.64" loading="lazy"></li>
+        <li><img src="media/partners/jnj-shockwave.png" width="1526" height="160" alt="Johnson & Johnson MedTech, Shockwave Medical" style="--k: 0.80" loading="lazy"></li>
+        <li><img src="media/partners/krka.png" width="516" height="160" alt="KRKA" style="--k: 1.05" loading="lazy"></li>
+        <li><img src="media/partners/meril.png" width="404" height="160" alt="Meril" style="--k: 0.91" loading="lazy"></li>
+        <li><img src="media/partners/msn.png" width="400" height="160" alt="MSN" style="--k: 1.09" loading="lazy"></li>
+        <li><img src="media/partners/philips.png" width="874" height="160" alt="Philips" style="--k: 0.70" loading="lazy"></li>
+        <li><img src="media/partners/servier.png" width="619" height="160" alt="Servier" style="--k: 0.95" loading="lazy"></li>
+      </ul>
+      <ul class="logos" aria-hidden="true">
+        <li><img src="media/partners/abbott.png" width="639" height="160" alt="" style="--k: 0.95" loading="lazy"></li>
+        <li><img src="media/partners/adamed.png" width="187" height="160" alt="" style="--k: 1.73" loading="lazy"></li>
+        <li><img src="media/partners/celon.png" width="346" height="160" alt="" style="--k: 1.14" loading="lazy"></li>
+        <li><img src="media/partners/hemolens.png" width="1956" height="160" alt="" style="--k: 0.64" loading="lazy"></li>
+        <li><img src="media/partners/jnj-shockwave.png" width="1526" height="160" alt="" style="--k: 0.80" loading="lazy"></li>
+        <li><img src="media/partners/krka.png" width="516" height="160" alt="" style="--k: 1.05" loading="lazy"></li>
+        <li><img src="media/partners/meril.png" width="404" height="160" alt="" style="--k: 0.91" loading="lazy"></li>
+        <li><img src="media/partners/msn.png" width="400" height="160" alt="" style="--k: 1.09" loading="lazy"></li>
+        <li><img src="media/partners/philips.png" width="874" height="160" alt="" style="--k: 0.70" loading="lazy"></li>
+        <li><img src="media/partners/servier.png" width="619" height="160" alt="" style="--k: 0.95" loading="lazy"></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="formats" aria-labelledby="formatsTitle">
+    <div class="wrap">
+      <h2 id="formatsTitle">Cały kurs klasycznie. Wybrane zabiegi także w 360°.</h2>
+      <!-- one course with an extension nested inside it, not two options to choose from -->
+      <div class="format">
+        <div class="format-base">
+          <svg class="format-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="30" height="19" rx="2.5"/><path d="M15 33h10M20 28v5"/><path d="M17.5 15.5v6l5-3z"/></svg>
+          <h3>Każdy wykład i zabieg</h3>
+          <p>Wykłady i zabiegi „live in a box” z komentarzem ekspertów, na komputerze, tablecie lub telefonie.</p>
+        </div>
+        <div class="format-plus dark">
+          <span class="plus-mark" aria-hidden="true">+</span>
+          <svg class="format-icon" width="48" height="40" viewBox="928 692 4144 2466" aria-hidden="true"><path fill="currentColor" d="M3000 2567C3034 2567 3068 2579 3102 2603C3127 2621 3152 2645 3178 2678C3223 2734 3264 2806 3301 2869C3333 2924 3363 2976 3386 3002C3400 3017 3421 3025 3441 3024C3703 3006 3966 2972 4223 2922C4520 2864 4735 2603 4735 2301L4735 1477C4735 1408 4712 1340 4668 1287C4625 1233 4564 1195 4496 1181C4006 1076 3502 1022 3000 1022C2499 1022 1995 1076 1505 1181C1366 1211 1266 1335 1266 1477L1266 2301C1266 2447 1317 2590 1410 2703C1503 2817 1634 2894 1778 2922C2035 2972 2298 3006 2560 3024C2580 3025 2601 3017 2615 3002C2638 2976 2668 2924 2700 2869C2737 2806 2778 2734 2823 2678C2849 2645 2874 2621 2899 2603C2933 2579 2967 2567 3000 2567ZM3437 3137C3414 3137 3390 3133 3369 3124C3343 3114 3320 3098 3302 3077C3271 3043 3239 2988 3203 2926C3168 2866 3129 2798 3090 2749C3042 2689 3013 2680 3000 2680C2988 2680 2959 2689 2911 2749C2872 2798 2833 2866 2798 2926C2762 2988 2730 3043 2699 3077C2681 3098 2658 3114 2632 3124C2607 3134 2579 3139 2552 3137C2286 3119 2018 3084 1756 3033C1670 3016 1589 2985 1514 2940C1441 2896 1377 2841 1323 2775C1269 2710 1227 2636 1198 2556C1168 2474 1152 2388 1152 2301L1152 1477C1152 1429 1161 1382 1177 1336C1193 1293 1216 1252 1245 1216C1274 1179 1309 1148 1349 1124C1390 1098 1434 1080 1481 1070C1980 963 2491 909 3000 909C3510 909 4021 963 4520 1070C4567 1080 4611 1098 4652 1124C4692 1148 4727 1179 4756 1216C4785 1252 4808 1293 4824 1336C4840 1382 4849 1429 4849 1477L4849 2301C4849 2388 4833 2474 4803 2556C4774 2636 4732 2710 4678 2775C4624 2841 4560 2896 4487 2940C4412 2985 4331 3016 4245 3033C3983 3084 3715 3119 3449 3137C3445 3137 3441 3137 3437 3137ZM2648 2373C2601 2373 2575 2373 2568 2371C2562 2370 2556 2365 2552 2356C2512 2279 2473 2202 2434 2124C2371 1999 2340 1929 2340 1912C2340 1885 2341 1844 2343 1790C2345 1735 2346 1695 2346 1667C2346 1655 2349 1648 2356 1648C2377 1648 2408 1649 2450 1651C2492 1653 2523 1653 2544 1653C2553 1653 2557 1657 2557 1664C2557 1692 2555 1734 2551 1790C2547 1846 2545 1887 2545 1915C2545 1937 2580 2013 2650 2144C2669 2110 2690 2068 2714 2018C2747 1952 2763 1911 2763 1896C2763 1871 2763 1833 2762 1783C2761 1732 2761 1695 2761 1669C2761 1660 2762 1655 2766 1654L2782 1654C2801 1654 2830 1653 2868 1651C2906 1649 2935 1648 2954 1648C2964 1648 2969 1652 2969 1661C2969 1687 2969 1727 2968 1780C2967 1834 2966 1874 2966 1901C2966 1922 2933 2000 2865 2136C2838 2185 2800 2258 2749 2356C2746 2364 2743 2368 2742 2369C2741 2370 2736 2371 2729 2371C2711 2373 2684 2373 2648 2373ZM3443 1904C3443 1862 3429 1833 3402 1817C3381 1804 3347 1798 3302 1798C3269 1798 3252 1803 3250 1813C3248 1825 3247 1859 3247 1914C3247 1922 3247 1934 3247 1949C3248 1965 3248 1976 3248 1984C3248 1986 3253 1987 3264 1989C3285 1992 3307 1994 3330 1994C3406 1994 3443 1964 3443 1904ZM3660 2366C3660 2369 3656 2370 3649 2371C3636 2373 3603 2374 3551 2374C3506 2374 3475 2373 3459 2371C3452 2370 3447 2369 3446 2369C3444 2368 3442 2364 3439 2358C3434 2345 3426 2325 3416 2299C3403 2264 3382 2214 3354 2147C3347 2133 3333 2126 3311 2124C3321 2125 3303 2126 3258 2126C3253 2126 3250 2134 3250 2152C3250 2175 3252 2210 3256 2256C3261 2303 3263 2338 3263 2361C3263 2367 3261 2370 3258 2371C3253 2372 3249 2372 3244 2372C3223 2374 3192 2374 3149 2374C3100 2374 3070 2373 3060 2371C3050 2369 3045 2364 3045 2355C3045 2318 3047 2261 3051 2184C3054 2108 3056 2051 3056 2013C3056 1867 3053 1754 3046 1673L3046 1665C3046 1659 3051 1656 3062 1653C3073 1651 3126 1649 3220 1647C3283 1646 3334 1645 3372 1645C3450 1645 3514 1663 3563 1698C3619 1738 3647 1796 3647 1871C3647 1921 3640 1961 3626 1991C3611 2021 3585 2050 3546 2078C3538 2084 3534 2089 3534 2094C3534 2093 3555 2136 3597 2223C3639 2310 3660 2357 3660 2366ZM1004 2076L1004 2076C973 2076 948 2051 948 2020L948 1610C948 1579 973 1553 1004 1553L1004 1553C1036 1553 1061 1579 1061 1610L1061 2020C1061 2051 1036 2076 1004 2076ZM4996 2076L4996 2076C5027 2076 5052 2051 5052 2020L5052 1610C5052 1579 5027 1553 4996 1553L4996 1553C4964 1553 4939 1579 4939 1610L4939 2020C4939 2051 4964 2076 4996 2076ZM2635 766L2635 772C2635 801 2659 826 2689 826L3425 826C3455 826 3479 801 3479 772L3479 766C3479 737 3455 712 3425 712L2689 712C2659 712 2635 737 2635 766Z"/></svg>
+          <h3>Do tego widok 360° i VR</h3>
+          <p>Wybrane zabiegi nagraliśmy dodatkowo kamerami 360°. Z obrazu klasycznego przeniesiesz się do sali i rozejrzysz się w przeglądarce albo w goglach VR.</p>
+          <p class="format-note">Gogle VR do wersji 360° będą dostępne bezpłatnie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="experts" aria-labelledby="expertsTitle">
+    <div class="wrap">
+      <h2 id="expertsTitle">Eksperci</h2>
+      <ul class="expert-list">
+        <li class="expert">
+          <img src="media/experts/koltowski.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">prof. dr hab. n. med. Łukasz Kołtowski, FESC</p>
+          <p class="expert-role">Kierownik naukowy kursu</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/kochman.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">prof. Janusz Kochman</p>
+          <p class="expert-role">Złożona PCI, zwapniała zmiana wieńcowa</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/balsam.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">prof. Paweł Balsam</p>
+          <p class="expert-role">Zwapniała zmiana wieńcowa, ablacja</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="program" id="program">
+    <canvas class="dots" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="program-head">
+        <h2>Program</h2>
+        <p>6 sesji, 21 wykładów, zabiegi „live in a box”</p>
+      </div>
+      <ul class="entries">
+        <li><a class="entry" aria-label="Sesja 1: Złożona PCI, 4 wykłady. Zabieg: Hybryda DES + DEB w chorobie wielonaczyniowej" href="#s-pci" data-session="s-pci">
+          <span class="entry-top"><span class="entry-no">01</span><span>4 wykłady</span></span>
+          <span class="entry-name">Złożona PCI</span>
+          <span class="entry-case"><span>Zabieg</span>Hybryda DES + DEB w chorobie wielonaczyniowej</span>
+        </a></li>
+        <li><a class="entry" aria-label="Sesja 2: Planowanie PCI w tomografii, 3 wykłady i panel. Zabieg: PCI pod kontrolą angio-TK i obrazowania wewnątrznaczyniowego" href="#s-tk" data-session="s-tk">
+          <span class="entry-top"><span class="entry-no">02</span><span>3 wykłady i panel</span></span>
+          <span class="entry-name">Planowanie PCI w tomografii</span>
+          <span class="entry-case"><span>Zabieg</span>PCI pod kontrolą angio-TK i obrazowania wewnątrznaczyniowego</span>
+        </a></li>
+        <li><a class="entry" aria-label="Sesja 3: Zwapniała zmiana wieńcowa, 4 wykłady. Zabieg: Litotrypsja krok po kroku" href="#s-wapn" data-session="s-wapn">
+          <span class="entry-top"><span class="entry-no">03</span><span>4 wykłady</span></span>
+          <span class="entry-name">Zwapniała zmiana wieńcowa</span>
+          <span class="entry-case"><span>Zabieg</span>Litotrypsja krok po kroku</span>
+        </a></li>
+        <li><a class="entry" aria-label="Sesja 4: Dławica mikrokrążeniowa, 4 wykłady. Zabieg: Reduktor zatoki wieńcowej w dławicy opornej" href="#s-anoca" data-session="s-anoca">
+          <span class="entry-top"><span class="entry-no">04</span><span>4 wykłady</span></span>
+          <span class="entry-name">Dławica mikrokrążeniowa</span>
+          <span class="entry-case"><span>Zabieg</span>Reduktor zatoki wieńcowej w dławicy opornej</span>
+        </a></li>
+        <li><a class="entry" aria-label="Sesja 5: Ocena czynnościowa, 3 wykłady. Zabieg: Cyfrowy kokpit pracowni kardiologii inwazyjnej" href="#s-ffr" data-session="s-ffr">
+          <span class="entry-top"><span class="entry-no">05</span><span>3 wykłady</span></span>
+          <span class="entry-name">Ocena czynnościowa</span>
+          <span class="entry-case"><span>Zabieg</span>Cyfrowy kokpit pracowni kardiologii inwazyjnej</span>
+        </a></li>
+        <li><a class="entry" aria-label="Sesja 6: Ablacja, 3 wykłady. Zabieg: Zabieg ablacji z komentarzem operatorów" href="#s-abl" data-session="s-abl">
+          <span class="entry-top"><span class="entry-no">06</span><span>3 wykłady</span></span>
+          <span class="entry-name">Ablacja</span>
+          <span class="entry-case"><span>Zabieg</span>Zabieg ablacji z komentarzem operatorów</span>
+        </a></li>
+      </ul>
+      <p class="note">Kliknij sesję, aby zobaczyć wykłady i prowadzących. Program może ulec zmianie.</p>
+
+      <!-- Session details: shown in a dialog when JS runs, as plain sections otherwise -->
+      <div class="sessions">
+        <article class="session" id="s-pci">
+          <h3>Choroba wieńcowa i złożona PCI</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Jak poradzić sobie z masywnymi zwapnieniami w tętnicach wieńcowych: drogowskaz skutecznej i bezpiecznej interwencji<span class="who">prof. Janusz Kochman</span></li>
+            <li><span class="kind">Zabieg</span>Mniej metalu, więcej strategii: hybryda DES + DEB w chorobie wielonaczyniowej<span class="who">dr hab. n. med. Grzegorz Sobieszek, prof. Janusz Kochman, prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Dalsze leczenie</span>DAPT po PCI: gdzie jest miejsce tikagreloru?<span class="who">prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Terapia trójlekowa nadciśnienia: jak optymalizować leczenie obok RDN<span class="who">prof. Łukasz Kołtowski</span></li>
+          </ul>
+        </article>
+        <article class="session" id="s-tk">
+          <h3>Planowanie angioplastyki wieńcowej w tomografii komputerowej</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Miejsce tomografii komputerowej w planowaniu angioplastyki wieńcowej<span class="who">lek. Natalia Krajewska</span></li>
+            <li><span class="kind">Diagnostyka</span>Look into the future: jak FFR-CT zmienia ścieżki diagnostyczne przewlekłych zespołów wieńcowych<span class="who">prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Zabieg</span>Angioplastyka wieńcowa pod kontrolą angio-TK i obrazowania wewnątrznaczyniowego: od planowania po potwierdzenie efektu<span class="who">prof. Tomasz Roleder, prof. Łukasz Kołtowski, lek. Natalia Krajewska</span></li>
+            <li><span class="kind">Dyskusja</span>Panel dyskusyjny ekspertów</li>
+          </ul>
+        </article>
+        <article class="session" id="s-wapn">
+          <h3>Zwapniała zmiana wieńcowa</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Zwapniała blaszka w CT: zaplanuj PCI, zanim wejdziesz do pracowni<span class="who">lek. Natalia Krajewska</span></li>
+            <li><span class="kind">Zabieg</span>Litotrypsja krok po kroku: jak rozbić wapń i dobrze rozprężyć stent<span class="who">prof. Janusz Kochman, prof. Łukasz Kołtowski, lek. Natalia Krajewska</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Optymalizacja czynników ryzyka i leczenie przeciwdławicowe w PZW<span class="who">prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Riwaroksaban w PZW: dual pathway w praktyce<span class="who">prof. Paweł Balsam</span></li>
+          </ul>
+        </article>
+        <article class="session" id="s-anoca">
+          <h3>Dławica mikrokrążeniowa (ANOCA/INOCA)</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Diagnostyka i selekcja pacjentów do zabiegu<span class="who">dr n. med. Szymon Włodarczak</span></li>
+            <li><span class="kind">Diagnostyka</span>Look into the future: najnowsze doniesienia naukowe<span class="who">prof. Mariusz Tomaniak</span></li>
+            <li><span class="kind">Zabieg</span>Reduktor zatoki wieńcowej: nadzieja w dławicy opornej<span class="who">prof. Marek Grygier, prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Dławica bez zwężeń: rola ranolazyny w leczeniu<span class="who">prof. Łukasz Kołtowski</span></li>
+          </ul>
+        </article>
+        <article class="session" id="s-ffr">
+          <h3>Angioplastyka wieńcowa i ocena czynnościowa</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Ergonomia pracy, multimodalność i bezpieczeństwo w trakcie angioplastyki wieńcowej w ostrych zespołach wieńcowych<span class="who">prof. Aleksandra Gąsecka</span></li>
+            <li><span class="kind">Zabieg</span>Angioplastyka wieńcowa: jak wykorzystać pełen potencjał cyfrowego kokpitu pracowni kardiologii inwazyjnej<span class="who">prof. Łukasz Kołtowski, prof. Aleksandra Gąsecka</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Leczenie przeciwpłytkowe po angioplastyce wieńcowej: od wytycznych po opcje indywidualizacji terapii<span class="who">prof. Mariusz Tomaniak</span></li>
+          </ul>
+        </article>
+        <article class="session" id="s-abl">
+          <h3>Ablacja</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Temat wkrótce<span class="who">prof. Paweł Balsam</span></li>
+            <li><span class="kind">Zabieg</span>Ablacja<span class="who">prof. Piotr Lodziński, prof. Michał Marchel</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Niewydolność serca i migotanie przedsionków<span class="who">prof. Marcin Grabowski</span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <dialog class="session-dialog dark" id="sessionDialog" aria-labelledby="sessionDialogTitle">
+    <button class="dialog-close" type="button" aria-label="Zamknij" data-close>
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div class="dialog-body" id="sessionDialogBody"></div>
+  </dialog>
+
+  <section class="signup dark" id="zapis">
+    <div class="signup-glow" aria-hidden="true"></div>
+    <canvas class="vessels" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <h2>Wejdź do pracowni pierwszego dnia.</h2>
+      <p class="meta">Premiera w listopadzie 2026. Zostaw kontakt, a powiadomimy Cię, gdy kurs wystartuje. Kurs i gogle VR są bezpłatne.</p>
+      <form class="notify" data-notify novalidate>
+        <div class="notify-row">
+          <label class="sr-only" for="email-signup">Adres e-mail</label>
+          <input class="notify-input" id="email-signup" type="email" name="email" autocomplete="email" inputmode="email" enterkeyhint="send" autocapitalize="none" spellcheck="false" placeholder="Twój adres e-mail" required aria-describedby="email-signup-msg">
+          <button class="btn btn-light notify-submit" type="submit"><span class="notify-label">Powiadom mnie</span></button>
+        </div>
+        <p class="consent">Wyślemy tylko powiadomienie o premierze. <a href="#">Polityka prywatności</a></p>
+        <p class="notify-msg" id="email-signup-msg" aria-live="polite"></p>
+        <p class="notify-done" role="status" hidden><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.4l2.6 2.6L14 7.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span></span><button class="notify-reset" type="button">Zmień adres</button></p>
+      </form>
+      <footer class="signup-foot">
+        <span>Organizator <img src="media/remedium-logo.svg" width="485" height="84" alt="remedium"></span>
+        <span>Akademia Kardiologii Zabiegowej 2026</span>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<aside class="bar dark" id="bar" aria-label="Powiadomienie o premierze kursu">
+  <img src="media/akz-mark.svg" width="288" height="116" alt="Akademia Kardiologii Zabiegowej">
+  <a class="btn btn-light" href="#zapis" data-goto-signup>Powiadom mnie<span class="bar-long">&nbsp;o premierze</span></a>
+</aside>
+
+<script>
+// Scroll reveal: tag the blocks below the hero; whatever enters together is staggered in reading order.
+(() => {
+  if (!('IntersectionObserver' in window)) return;
+  const items = document.querySelectorAll([
+    '.formats h2', '.format-base', '.format-plus',
+    '.experts h2', '.expert',
+    '.program-head', '.entries > li', '.program .note',
+    '.signup h2', '.signup .meta', '.signup .notify', '.signup-foot',
+  ].join(','));
+  const io = new IntersectionObserver((es) => {
+    es.filter((e) => e.isIntersecting).forEach((e, i) => {
+      e.target.style.setProperty('--d', i); e.target.classList.add('is-in'); io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  items.forEach((el) => { el.classList.add('reveal'); io.observe(el); });
+  document.querySelectorAll('.expert img').forEach((img) => {
+    const loaded = () => img.classList.add('is-loaded');
+    if (img.complete && img.naturalWidth) loaded(); else { img.addEventListener('load', loaded); img.addEventListener('error', loaded); }
+  });
+  document.documentElement.classList.add('reveal-on');
+})();
+</script>
+
+<script>
+// Sign-up bar: shown between the hero and the sign-up section.
+(() => {
+  const bar = document.getElementById('bar');
+  if (!('IntersectionObserver' in window)) return;
+  const seen = new Set();
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target));
+    bar.classList.toggle('shown', seen.size === 0);
+  });
+  io.observe(document.getElementById('top')); io.observe(document.getElementById('zapis'));
+})();
+</script>
+
+<script>
+// Program: an entry opens its session in a dialog (without JS the entries link to the sections below).
+(() => {
+  const dialog = document.getElementById('sessionDialog'), body = document.getElementById('sessionDialogBody');
+  if (!dialog || typeof dialog.showModal !== 'function') { document.documentElement.classList.remove('js'); return; }
+  let opener = null;
+  document.querySelectorAll('.entry').forEach((entry) => entry.addEventListener('click', (e) => {
+    e.preventDefault();
+    const src = document.getElementById(entry.dataset.session);
+    body.innerHTML = src.innerHTML;
+    const h = body.querySelector('h3'); h.id = 'sessionDialogTitle';
+    opener = entry; dialog.showModal();
+  }));
+  dialog.addEventListener('click', (e) => { if (e.target === dialog || e.target.closest('[data-close]')) dialog.close(); });
+  dialog.addEventListener('close', () => opener && opener.focus());
+})();
+</script>
+
+<script>
+// Sign-up background: a procedurally grown coronary tree, drawn like an angiogram's negative (light vessels on the brand field).
+// Near the cursor a wave of "contrast" runs from that point down the branch and into its side branches, then washes out.
+// Once, when the section first comes into view, the trunks fill on their own. No looping pulse.
+// No patient imagery: every vessel is generated here from a fixed seed.
+(() => {
+  const section = document.getElementById('zapis'), canvas = section && section.querySelector(':scope > canvas.vessels');
+  const ctx = canvas && canvas.getContext('2d');
+  if (!ctx) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // light vessels over a background that is a gradient (and moves), so nothing is mixed toward a fixed colour
+  const dark = true;
+  const INK = '246,239,244';
+  const INK_RGB = [246, 239, 244];       // contrast once it settles
+  const VIOLET_RGB = [187, 169, 255];    // fresh contrast at the front
+  const REST_ALPHA = 0.1;
+  const SPEED = 520;      // px per second the contrast front travels
+  const WASH = 1.6;       // seconds for contrast to fade behind the front
+  const REACH = 46;       // px: how close the cursor must come to "inject" a vessel
+  let w = 0, h = 0, vessels = [], pulses = [], running = false, visible = true, last = 0;
+  const rest = document.createElement('canvas'), restCtx = rest.getContext('2d'); // the resting tree, drawn once per layout
+  const fx = document.createElement('canvas'), fxCtx = fx.getContext('2d');       // scratch layer for the contrast glow
+  const CAN_FILTER = 'filter' in ctx; // canvas blur; without it the vessels simply have no glow
+
+  // small deterministic PRNG so the tree looks the same on every visit
+  function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  function grow() {
+    const rand = rng(1984), scale = Math.max(w, h) / 1400;
+    vessels = [];
+    function vessel(x, y, angle, width, length, depth, parent, at) {
+      const v = { pts: [[x, y]], len: [0], width, parent, at, kids: [], cool: 0 };
+      vessels.push(v);
+      const step = 7 * scale; let a = angle, bend = 0, total = 0;
+      while (total < length) {
+        bend += (rand() - 0.5) * 0.035; bend *= 0.9; a += bend + (angle - a) * 0.02; // gentle curvature that keeps its overall heading
+        x += Math.cos(a) * step; y += Math.sin(a) * step; total += step;
+        v.pts.push([x, y]); v.len.push(total);
+        if (depth < 3 && total > 60 * scale && total < length * 0.85 && rand() < (depth ? 0.03 : 0.022)) { // side branch
+          const side = rand() < 0.5 ? -1 : 1;
+          const kid = vessel(x, y, a + side * (0.35 + rand() * 0.45), width * (0.5 + rand() * 0.15), (length - total) * (0.45 + rand() * 0.35), depth + 1, v, v.pts.length - 1);
+          v.kids.push(kid);
+        }
+      }
+      return v;
+    }
+    // three trunks entering from the edges, roughly like LM/LAD, LCx and RCA crossing a fluoroscopy frame
+    vessel(-20, h * 0.30, 0.18, 4.2 * scale + 1.2, w * 0.95, 0, null, 0);
+    vessel(w * 0.62, -20, 1.75, 3.6 * scale + 1, h * 1.05, 0, null, 0);
+    vessel(w + 20, h * 0.78, Math.PI + 0.12, 3.8 * scale + 1, w * 0.75, 0, null, 0);
+  }
+
+  function layout() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = section.clientWidth; h = section.clientHeight;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    rest.width = fx.width = canvas.width; rest.height = fx.height = canvas.height;
+    restCtx.setTransform(dpr, 0, 0, dpr, 0, 0); fxCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    grow(); paintRest(); pulses = []; draw(performance.now() / 1000);
+  }
+
+  // contrast intensity at arc length s of a pulse: 0 ahead of the front, fading with time since the front passed
+  function intensity(p, s, now) {
+    if (s < p.s0) return 0;
+    const passed = p.t0 + (s - p.s0) / SPEED;
+    if (passed > now) return 0;
+    return Math.exp(-(now - passed) / (WASH / 2.2));
+  }
+
+  function paintRest() {
+    restCtx.clearRect(0, 0, w, h);
+    // drawn opaque, then composited faint in draw(): per-segment alpha would double up at the joints and look beaded
+    restCtx.lineCap = 'round'; restCtx.lineJoin = 'round'; restCtx.strokeStyle = `rgb(${INK})`;
+    for (const v of vessels) {
+      // resting vessel: faint, tapering towards the periphery
+      const n = v.pts.length;
+      for (let i = 1; i < n; i++) {
+        restCtx.lineWidth = v.width * (1 - (i / n) * 0.7);
+        restCtx.beginPath(); restCtx.moveTo(v.pts[i - 1][0], v.pts[i - 1][1]); restCtx.lineTo(v.pts[i][0], v.pts[i][1]); restCtx.stroke();
+      }
+    }
+  }
+
+  // the contrast colour at a point: violet at the front, easing into the settled tone (no hard steps between segments)
+  function contrastRgb(p, i, now) {
+    const v = p.v, mix = Math.min(1, Math.max(0, (now - (p.t0 + (v.len[i] - p.s0) / SPEED)) / 0.5));
+    return [0, 1, 2].map((j) => VIOLET_RGB[j] + (INK_RGB[j] - VIOLET_RGB[j]) * mix);
+  }
+
+  function draw(now) {
+    ctx.clearRect(0, 0, w, h);
+    // resting tree: a soft halo under each vessel gives it volume, then the vessel itself
+    if (CAN_FILTER) { ctx.filter = 'blur(5px)'; ctx.globalAlpha = REST_ALPHA * 0.9; ctx.drawImage(rest, 0, 0, w, h); ctx.filter = 'none'; }
+    ctx.globalAlpha = REST_ALPHA; ctx.drawImage(rest, 0, 0, w, h); ctx.globalAlpha = 1;
+    if (!pulses.length) return;
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+
+    // 1) glow: contrast strokes into a scratch layer, composited blurred so the filled vessel seems lit from inside
+    if (CAN_FILTER) {
+      fxCtx.clearRect(0, 0, w, h); fxCtx.lineCap = 'round'; fxCtx.lineJoin = 'round';
+      for (const p of pulses) {
+        const v = p.v, n = v.pts.length;
+        for (let i = 1; i < n; i++) {
+          const k = intensity(p, v.len[i], now); if (k < 0.02) continue;
+          const c = contrastRgb(p, i, now);
+          fxCtx.strokeStyle = `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${(k * 0.9).toFixed(3)})`;
+          fxCtx.lineWidth = v.width * (1 - (i / n) * 0.7) * 3;
+          fxCtx.beginPath(); fxCtx.moveTo(v.pts[i - 1][0], v.pts[i - 1][1]); fxCtx.lineTo(v.pts[i][0], v.pts[i][1]); fxCtx.stroke();
+        }
+      }
+      ctx.save();
+      ctx.globalCompositeOperation = dark ? 'lighter' : 'multiply';
+      ctx.filter = 'blur(9px)'; ctx.globalAlpha = dark ? 0.5 : 0.3;
+      ctx.drawImage(fx, 0, 0, w, h);
+      ctx.restore();
+    }
+
+    // 2) the sharp vessel on top of the resting one. Butt caps: segments meet edge to edge (the tree bends gently),
+    //    so translucent strokes don't double up at the joints; as k falls to 0 the stretch fades back into the resting vessel
+    ctx.lineCap = 'butt';
+    for (const p of pulses) {
+      const v = p.v, n = v.pts.length;
+      for (let i = 1; i < n; i++) {
+        const k = intensity(p, v.len[i], now); if (k < 0.01) continue;
+        const c = contrastRgb(p, i, now);
+        ctx.strokeStyle = `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${(k * 0.75).toFixed(3)})`;
+        ctx.lineWidth = v.width * (1 - (i / n) * 0.7) * (1 + k * 0.35);
+        ctx.beginPath(); ctx.moveTo(v.pts[i - 1][0], v.pts[i - 1][1]); ctx.lineTo(v.pts[i][0], v.pts[i][1]); ctx.stroke();
+      }
+    }
+  }
+
+  // start contrast in vessel v at point index i; it spreads into side branches as the front reaches them
+  function inject(v, i, now) {
+    if (now < v.cool) return;
+    v.cool = now + 1.2;
+    pulses.push({ v, s0: v.len[i], t0: now, spawned: new Set() });
+    kick();
+  }
+  function spread(now) {
+    for (const p of pulses.slice()) {
+      for (const kid of p.v.kids) {
+        if (p.spawned.has(kid)) continue;
+        const reach = p.v.len[kid.at];
+        if (reach >= p.s0 && p.t0 + (reach - p.s0) / SPEED <= now) {
+          p.spawned.add(kid);
+          pulses.push({ v: kid, s0: 0, t0: p.t0 + (reach - p.s0) / SPEED, spawned: new Set() });
+        }
+      }
+    }
+    // drop pulses whose whole vessel has washed out
+    pulses = pulses.filter((p) => now - (p.t0 + (p.v.len[p.v.len.length - 1] - p.s0) / SPEED) < WASH * 1.5);
+  }
+
+  function tick(t) {
+    const now = t / 1000; last = now;
+    spread(now); draw(now);
+    if (pulses.length && visible) requestAnimationFrame(tick); else running = false;
+  }
+  function kick() { if (!running && visible && !reduce) { running = true; requestAnimationFrame(tick); } }
+
+  section.addEventListener('pointermove', (e) => {
+    if (reduce || e.pointerType === 'touch') return;
+    const r = section.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, now = performance.now() / 1000;
+    for (const v of vessels) {
+      for (let i = 0; i < v.pts.length; i += 2) {
+        const dx = v.pts[i][0] - x, dy = v.pts[i][1] - y;
+        if (dx * dx + dy * dy < REACH * REACH) { inject(v, i, now); break; }
+      }
+    }
+  });
+
+  new ResizeObserver(layout).observe(section);
+  let filled = false;
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible && !filled && !reduce) { // first view: contrast enters the three trunks, a beat apart
+      filled = true;
+      vessels.filter((v) => !v.parent).forEach((v, j) => setTimeout(() => inject(v, 0, performance.now() / 1000), 300 + j * 380));
+    }
+    if (visible && pulses.length) kick();
+  }, { threshold: 0.35 }).observe(section);
+})();
+
+// The violet light drifts after the cursor, slowly (time constant ~1.1 s), and settles back home when it leaves.
+(() => {
+  const section = document.getElementById('zapis'), glow = section && section.querySelector('.signup-glow');
+  if (!glow || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const TAU = 1.1, HOME = [0.22, 0.58]; // where the light rests, as a fraction of the section
+  const pos = { x: 0, y: 0 }, target = { x: 0, y: 0 };
+  let running = false, last = 0;
+  function tick(t) {
+    const dt = Math.min((t - last) / 1000, 0.1); last = t;
+    const k = 1 - Math.exp(-dt / TAU);
+    pos.x += (target.x - pos.x) * k; pos.y += (target.y - pos.y) * k;
+    glow.style.transform = `translate3d(${pos.x.toFixed(1)}px, ${pos.y.toFixed(1)}px, 0)`;
+    if (Math.abs(target.x - pos.x) + Math.abs(target.y - pos.y) > 0.5) requestAnimationFrame(tick); else running = false;
+  }
+  const kick = () => { if (!running) { running = true; last = performance.now(); requestAnimationFrame(tick); } };
+  section.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
+    const r = section.getBoundingClientRect();
+    target.x = e.clientX - r.left - r.width * HOME[0]; target.y = e.clientY - r.top - r.height * HOME[1];
+    kick();
+  });
+  section.addEventListener('pointerleave', () => { target.x = 0; target.y = 0; kick(); });
+})();
+</script>
+
+<script>
+// Dot fields behind the hero and the program: a quiet grid that brightens and parts around the cursor (mouse/pen only).
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const GAP = 26, BASE_R = 1.1, REACH = 150, PUSH = 9;
+
+  function dotField(section, { rgb, rest, peak }) {
+    const canvas = section.querySelector(':scope > canvas.dots'), ctx = canvas && canvas.getContext('2d');
+    if (!ctx) return;
+    let w = 0, h = 0, dots = [], visible = false, running = false;
+    const cursor = { x: 0, y: 0, tx: 0, ty: 0, s: 0, ts: 0 }; // s: how strongly the cursor is felt
+
+    function layout() {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      w = section.clientWidth; h = section.clientHeight;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      dots = [];
+      const ox = (w % GAP) / 2, oy = (h % GAP) / 2;
+      for (let y = oy; y <= h; y += GAP) for (let x = ox; x <= w; x += GAP) dots.push(x, y);
+      draw();
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < dots.length; i += 2) {
+        let x = dots[i], y = dots[i + 1], r = BASE_R, a = rest;
+        if (cursor.s > 0.001) {
+          const dx = x - cursor.x, dy = y - cursor.y, d = Math.hypot(dx, dy);
+          if (d < REACH) {
+            const t = (1 - d / REACH) ** 2 * cursor.s;
+            if (d > 0.01 && !reduce) { x += dx / d * t * PUSH; y += dy / d * t * PUSH; }
+            r += t * 1.8; a += t * (peak - rest);
+          }
+        }
+        ctx.fillStyle = `rgba(${rgb},${a.toFixed(3)})`;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+      }
+    }
+    function tick() {
+      const k = reduce ? 1 : 0.18;
+      cursor.x += (cursor.tx - cursor.x) * k; cursor.y += (cursor.ty - cursor.y) * k;
+      cursor.s += (cursor.ts - cursor.s) * (reduce ? 1 : 0.12);
+      draw();
+      const settled = Math.abs(cursor.tx - cursor.x) < 0.3 && Math.abs(cursor.ty - cursor.y) < 0.3 && Math.abs(cursor.ts - cursor.s) < 0.002;
+      if (visible && !settled) requestAnimationFrame(tick); else running = false;
+    }
+    const kick = () => { if (!running && visible) { running = true; requestAnimationFrame(tick); } };
+
+    section.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      const r = section.getBoundingClientRect();
+      cursor.tx = e.clientX - r.left; cursor.ty = e.clientY - r.top; cursor.ts = 1;
+      if (cursor.s < 0.01) { cursor.x = cursor.tx; cursor.y = cursor.ty; } // appear where the cursor enters, not from the corner
+      kick();
+    });
+    section.addEventListener('pointerleave', () => { cursor.ts = 0; kick(); });
+    new ResizeObserver(layout).observe(section);
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) kick(); }).observe(section);
+  }
+
+  // dark program: lilac dots (the hero has the vessel tree instead)
+  dotField(document.getElementById('program'), { rgb: '187,169,255', rest: 0.14, peak: 0.84 });
+})();
+</script>
+
+<script>
+// Notify forms: validate on submit, then live as the visitor fixes it; on success every form on the page shows the confirmation.
+(() => {
+  // TODO: set to the real sign-up endpoint (expects POST JSON { email, source }). While empty, submissions are simulated.
+  const SIGNUP_ENDPOINT = '';
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const forms = [...document.querySelectorAll('[data-notify]')];
+
+  const doneText = (email) => `Gotowe. Damy znać na ${email}, gdy kurs wystartuje.`;
+  function showDone(form, email) {
+    const done = form.querySelector('.notify-done');
+    done.querySelector('span').textContent = doneText(email); done.dataset.email = email;
+    done.hidden = false; form.classList.add('is-done');
+  }
+  // "Zmień adres": forget the saved address and bring the forms back, with the old address ready to correct
+  function reset(form, email) {
+    try { localStorage.removeItem('akz-notify'); } catch (e) {}
+    forms.forEach((f) => {
+      f.classList.remove('is-done', 'is-invalid'); f.querySelector('.notify-done').hidden = true;
+      f.email.value = email || ''; f.email.removeAttribute('aria-invalid'); f.querySelector('.notify-msg').textContent = '';
+    });
+    form.email.focus(); form.email.select();
+  }
+  // remember the sign-up for this visitor, so a reload doesn't ask again (best effort; storage may be unavailable)
+  let saved = null;
+  try { saved = localStorage.getItem('akz-notify'); } catch (e) {}
+  if (saved) forms.forEach((f) => showDone(f, saved));
+
+  function problem(form) {
+    const email = form.email.value.trim();
+    if (!email) return ['Wpisz adres e-mail.', form.email];
+    if (!EMAIL.test(email)) return ['Ten adres wygląda na niepełny. Sprawdź go i spróbuj ponownie.', form.email];
+    return null;
+  }
+  function render(form) {
+    const p = problem(form), msg = form.querySelector('.notify-msg');
+    msg.textContent = p ? p[0] : '';
+    form.classList.toggle('is-invalid', !!p && p[1] === form.email);
+    form.email.setAttribute('aria-invalid', String(!!p && p[1] === form.email));
+    return p;
+  }
+
+  forms.forEach((form, n) => {
+    let touched = false;
+    form.querySelector('.notify-reset').addEventListener('click', () => reset(form, form.querySelector('.notify-done').dataset.email));
+    form.addEventListener('input', () => { if (touched) render(form); });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      touched = true;
+      const p = render(form);
+      if (p) { p[1].focus(); return; }
+      const button = form.querySelector('.notify-submit'), label = button.querySelector('.notify-label');
+      const email = form.email.value.trim();
+      button.setAttribute('aria-busy', 'true'); label.textContent = 'Zapisuję';
+      try {
+        if (SIGNUP_ENDPOINT) {
+          const res = await fetch(SIGNUP_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, source: n === 0 ? 'hero' : 'signup' }) });
+          if (!res.ok) throw new Error(res.status);
+        } else {
+          await new Promise((r) => setTimeout(r, 700)); // simulated until the endpoint exists
+        }
+        try { localStorage.setItem('akz-notify', email); } catch (e) {}
+        forms.forEach((f) => showDone(f, email));
+      } catch (err) {
+        form.querySelector('.notify-msg').textContent = 'Nie udało się zapisać. Sprawdź połączenie i spróbuj ponownie.';
+      } finally {
+        button.removeAttribute('aria-busy'); label.textContent = 'Powiadom mnie';
+      }
+    });
+  });
+
+  // the sign-up bar jumps to the form at the bottom and puts the cursor in the e-mail field
+  document.querySelectorAll('[data-goto-signup]').forEach((a) => a.addEventListener('click', (e) => {
+    const target = document.getElementById('zapis'), input = target.querySelector('.notify-input');
+    e.preventDefault();
+    target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+    if (input && !target.querySelector('.notify.is-done')) setTimeout(() => input.focus({ preventScroll: true }), 450);
+  }));
+})();
+</script>
+
+<script>
+// Preloader exit: wait until the room has something to show (or a timeout), keep it on screen at least briefly,
+// then the sparkle and the mark fade out and the hero entrance is released.
+(() => {
+  const pre = document.getElementById('preloader'), mark = document.getElementById('preMark'), star = document.getElementById('preStar');
+  const root = document.documentElement;
+  if (!pre) { root.classList.remove('is-preloading'); return; }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const EASE_OUT = 'cubic-bezier(0.23, 1, 0.32, 1)';
+  const start = performance.now(), MIN = reduce ? 500 : 1500, MAX = 3200;
+  let done = false;
+
+  function release() {
+    root.classList.remove('is-preloading');
+    pre.remove();
+  }
+  function exit() {
+    if (done) return; done = true;
+    root.classList.remove('is-preloading'); // start the hero now; the veil fades over it
+    pre.style.pointerEvents = 'none';
+    if (reduce) { pre.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: 'ease', fill: 'forwards' }).finished.then(release); return; }
+    // the sparkle goes first, then the mark dissolves (a soft blur, a touch of scale), then the veil lifts
+    mark.style.animation = 'none'; star.style.animation = 'none';
+    star.animate([{ opacity: 1, transform: 'scale(1) rotate(0deg)' }, { opacity: 0, transform: 'scale(.6) rotate(60deg)' }],
+      { duration: 260, easing: EASE_OUT, fill: 'forwards' });
+    mark.animate([{ opacity: 1, transform: 'scale(1)', filter: 'blur(0px)' }, { opacity: 0, transform: 'scale(1.04)', filter: 'blur(8px)' }],
+      { duration: 450, delay: 120, easing: EASE_OUT, fill: 'forwards' });
+    pre.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 700, delay: 220, easing: 'cubic-bezier(0.77, 0, 0.175, 1)', fill: 'forwards' }).finished.then(release);
+  }
+  const ready = () => setTimeout(exit, Math.max(0, MIN - (performance.now() - start)));
+  addEventListener('akz:room-ready', ready, { once: true });
+  setTimeout(exit, MAX);          // slow network or no WebGL: don't hold the page hostage
+  setTimeout(release, 7000);      // last-resort safety net, matches the CSS failsafe
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+const windowView = document.getElementById('windowView');
+const immersive = document.getElementById('immersive');
+const immersiveView = document.getElementById('immersiveView');
+const openRoom = document.getElementById('openRoom');
+const hint = document.getElementById('hint');
+const pauseButtons = [document.getElementById('pause'), document.getElementById('pauseFull')];
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// 'window': small, brand-tinted, drifting on its own. 'full': the visitor looks around in near-true colour.
+let mode = 'window';
+// Degrees; lon maps to the panorama's horizontal axis (u = lon / 360). Starts on the team at the table.
+const view = { lon: 162, lat: -6, vLon: 0, vLat: 0 };
+
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' }); }
+catch (e) {
+  windowView.style.background = 'center / cover url(media/hero360-poster.jpg)';
+  pauseButtons.forEach((b) => (b.hidden = true));
+  throw e;
+}
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.25)); // the panorama has ~10 px per degree; more pixels add cost, not detail
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.autoClear = false;
+const canvas = renderer.domElement;
+windowView.appendChild(canvas);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, 1, 1, 1100);
+const sphere = new THREE.SphereGeometry(500, 72, 48); sphere.scale(-1, 1, 1);
+const material = new THREE.MeshBasicMaterial();
+scene.add(new THREE.Mesh(sphere, material));
+
+// Brand treatment from the key visual: footage "darkened" into the violet-burgundy field (MIN blend).
+const tintScene = new THREE.Scene(), tintCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const tint = new THREE.ShaderMaterial({
+  uniforms: { uStrength: { value: 1 }, uTime: { value: 0 } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: `
+    varying vec2 vUv; uniform float uStrength; uniform float uTime;
+    vec3 hex(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
+    float blob(vec2 p, vec2 c, vec2 r){ return length((p - c) / r); }
+    void main(){
+      vec2 p = vec2(vUv.x, 1.0 - vUv.y);
+      vec3 col = p.x < 0.55 ? mix(hex(59.,15.,99.), hex(74.,10.,69.), p.x / 0.55) : mix(hex(74.,10.,69.), hex(68.,0.,27.), (p.x - 0.55) / 0.45);
+      vec2 c2 = vec2(0.62, 0.30) + vec2(cos(uTime * 0.09), sin(uTime * 0.12)) * vec2(0.06, 0.05);
+      col = mix(col, hex(84.,16.,79.), 0.95 * (1.0 - smoothstep(0.0, 0.75, blob(p, c2, vec2(0.45, 0.70)))));
+      vec2 c1 = vec2(0.22, 0.58) + vec2(sin(uTime * 0.13), cos(uTime * 0.10)) * vec2(0.07, 0.05);
+      float d1 = blob(p, c1, vec2(0.55, 0.75) * (1.0 + 0.04 * sin(uTime * 0.21)));
+      float a1 = d1 < 0.45 ? mix(1.0, 0.55, d1 / 0.45) : 0.55 * (1.0 - smoothstep(0.45, 0.75, d1));
+      col = mix(col, hex(74.,41.,221.), a1);
+      gl_FragColor = vec4(mix(vec3(1.0), col, uStrength), 1.0);
+    }`,
+  depthTest: false, depthWrite: false, blending: THREE.CustomBlending, blendEquation: THREE.MinEquation,
+});
+tintScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), tint));
+
+new THREE.TextureLoader().load('media/hero360-poster.jpg', (t) => {
+  t.colorSpace = THREE.SRGBColorSpace;
+  if (!material.map) { material.map = t; material.needsUpdate = true; }
+  canvas.classList.add('ready');
+  dispatchEvent(new Event('akz:room-ready'));
+});
+
+const small = Math.min(screen.width, screen.height) < 768 || renderer.capabilities.maxTextureSize < 4096; // phones and weaker GPUs get the 2560px file
+const video = document.createElement('video');
+Object.assign(video, { muted: true, loop: true, playsInline: true, preload: 'auto' });
+video.setAttribute('muted', ''); video.setAttribute('playsinline', '');
+video.src = small ? 'media/hero360-sd.mp4' : 'media/hero360-hd.mp4';
+// Ambient light: sample the playing video a few times a second and tint the glow behind the window with it,
+// leaning toward the brand violet so it never turns muddy.
+const ambient = document.getElementById('ambient');
+if (ambient) {
+  const probe = document.createElement('canvas'); probe.width = 16; probe.height = 8;
+  const pctx = probe.getContext('2d', { willReadFrequently: true });
+  setInterval(() => {
+    if (video.paused || video.readyState < 2 || document.hidden || !windowVisible || !pctx) return;
+    pctx.drawImage(video, 0, 0, 16, 8);
+    const d = pctx.getImageData(0, 0, 16, 8).data; let r = 0, g = 0, b = 0;
+    for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
+    const n = d.length / 4, mix = (c, brand) => Math.round(c / n * 0.45 + brand * 0.55);
+    ambient.style.backgroundColor = `rgb(${mix(r, 92)},${mix(g, 52)},${mix(b, 200)})`;
+  }, 400);
+}
+
+video.addEventListener('playing', () => {
+  if (!(material.map instanceof THREE.VideoTexture)) {
+    const vt = new THREE.VideoTexture(video);
+    vt.colorSpace = THREE.SRGBColorSpace; vt.minFilter = THREE.LinearFilter; vt.generateMipmaps = false;
+    material.map = vt; material.needsUpdate = true; canvas.classList.add('ready');
+  }
+});
+const setPauseUi = () => pauseButtons.forEach((b) => {
+  b.setAttribute('aria-label', video.paused ? 'Odtwórz nagranie' : 'Zatrzymaj nagranie');
+  b.querySelector('.pause-icon').setAttribute('d', video.paused ? 'M3 1.5l9 5.5-9 5.5z' : 'M3 2h3v10H3zM8 2h3v10H8z');
+});
+video.addEventListener('play', setPauseUi); video.addEventListener('pause', setPauseUi);
+let userPaused = reduceMotion;
+const tryPlay = () => video.play().catch(setPauseUi);
+if (!reduceMotion) tryPlay(); setPauseUi();
+pauseButtons.forEach((b) => b.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (video.paused) { userPaused = false; video.play(); } else { userPaused = true; video.pause(); }
+}));
+
+// ---- Size: the canvas lives in whichever view is active ----
+function resize() {
+  const host = canvas.parentElement, w = host.clientWidth, h = host.clientHeight;
+  if (!w || !h) return;
+  camera.aspect = w / h; camera.fov = w < h ? 88 : (mode === 'window' ? 62 : 70); camera.updateProjectionMatrix();
+  renderer.setSize(w, h, false);
+}
+new ResizeObserver(resize).observe(windowView);
+new ResizeObserver(resize).observe(immersiveView);
+
+// ---- Open / close the full room ----
+let lastInput = performance.now(), interacted = false;
+openRoom.addEventListener('click', () => {
+  mode = 'full';
+  immersive.showModal();
+  immersiveView.appendChild(canvas); resize();
+  hint.classList.remove('gone'); interacted = false; lastInput = performance.now();
+  immersiveView.focus({ preventScroll: true });
+  if (!userPaused) tryPlay();
+  wake();
+});
+immersive.querySelector('[data-close-room]').addEventListener('click', () => immersive.close());
+immersive.addEventListener('close', () => {
+  mode = 'window';
+  windowView.appendChild(canvas); resize();
+  openRoom.focus({ preventScroll: true });
+});
+
+// ---- Looking around (full view only) ----
+let dragging = false, lastX = 0, lastY = 0, lastT = 0;
+const touched = () => { lastInput = performance.now(); if (!interacted) { interacted = true; hint.classList.add('gone'); } };
+immersiveView.addEventListener('pointerdown', (e) => {
+  if (e.button !== 0) return;
+  dragging = true; lastX = e.clientX; lastY = e.clientY; lastT = performance.now(); view.vLon = view.vLat = 0;
+  immersiveView.setPointerCapture(e.pointerId); immersiveView.classList.add('dragging'); touched();
+});
+immersiveView.addEventListener('pointermove', (e) => {
+  if (!dragging) return;
+  const now = performance.now(), dt = Math.max(now - lastT, 1), k = camera.fov / immersiveView.clientHeight;
+  const dLon = -(e.clientX - lastX) * k, dLat = (e.clientY - lastY) * k;
+  view.lon += dLon; view.lat += dLat; view.vLon = dLon / dt * 16; view.vLat = dLat / dt * 16;
+  lastX = e.clientX; lastY = e.clientY; lastT = now; touched();
+});
+const endDrag = () => { dragging = false; immersiveView.classList.remove('dragging'); lastInput = performance.now(); };
+immersiveView.addEventListener('pointerup', endDrag);
+immersiveView.addEventListener('pointercancel', () => { endDrag(); view.vLon = view.vLat = 0; });
+immersiveView.addEventListener('keydown', (e) => {
+  const step = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, 8], ArrowDown: [0, -8] }[e.key];
+  if (!step) return;
+  e.preventDefault(); view.vLon = step[0] / 8; view.vLat = step[1] / 8; touched();
+});
+
+// ---- Looking around from the hero itself: drag the background; the UI steps aside, then comes back ----
+const heroEl = document.getElementById('top');
+const SKIP = 'a, button, input, textarea, select, label, .notify, dialog';
+let bgDrag = false, uiBack = 0;
+const looking = () => heroEl.classList.contains('is-looking');
+heroEl.addEventListener('pointerdown', (e) => {
+  if (mode !== 'window' || e.button !== 0 || e.target.closest(SKIP)) return;
+  bgDrag = dragging = true; lastX = e.clientX; lastY = e.clientY; lastT = performance.now(); view.vLon = view.vLat = 0;
+  heroEl.setPointerCapture(e.pointerId);
+  clearTimeout(uiBack); heroEl.classList.add('is-looking', 'is-dragging', 'has-looked'); // has-looked retires the hint
+  lastInput = performance.now();
+});
+heroEl.addEventListener('pointermove', (e) => {
+  if (!bgDrag) return;
+  const now = performance.now(), dt = Math.max(now - lastT, 1), k = camera.fov / heroEl.clientHeight;
+  // touch: horizontal only, so vertical swipes still scroll the page (touch-action: pan-y)
+  const dLon = -(e.clientX - lastX) * k, dLat = e.pointerType === 'mouse' ? (e.clientY - lastY) * k : 0;
+  view.lon += dLon; view.lat += dLat; view.vLon = dLon / dt * 16; view.vLat = dLat / dt * 16;
+  lastX = e.clientX; lastY = e.clientY; lastT = now; lastInput = now;
+});
+const endBgDrag = (cancel) => {
+  if (!bgDrag) return;
+  bgDrag = dragging = false; heroEl.classList.remove('is-dragging'); lastInput = performance.now();
+  if (cancel) view.vLon = view.vLat = 0;
+  uiBack = setTimeout(() => heroEl.classList.remove('is-looking'), 1500); // let the room settle, then bring the page back
+};
+heroEl.addEventListener('pointerup', () => endBgDrag(false));
+heroEl.addEventListener('pointercancel', () => endBgDrag(true));
+
+// ---- Render only while the window is on screen or the room is open ----
+let windowVisible = true, running = false, last = performance.now();
+new IntersectionObserver(([e]) => {
+  windowVisible = e.isIntersecting;
+  if (windowVisible && !userPaused) tryPlay();
+  if (!windowVisible && mode === 'window') video.pause();
+  wake();
+}).observe(windowView);
+function wake() { if (!running) { running = true; last = performance.now(); requestAnimationFrame(tick); } }
+
+const target = new THREE.Vector3();
+function tick(now) {
+  if (!(windowVisible || mode === 'full')) { running = false; return; }
+  const dt = Math.min((now - last) / 1000, 0.1); last = now;
+  if (!dragging) {
+    view.lon += view.vLon; view.lat += view.vLat;
+    const decay = reduceMotion ? 0 : Math.pow(0.9, dt * 60); view.vLon *= decay; view.vLat *= decay;
+    if (!reduceMotion) {
+      // the window drifts all the time; in the full room only after a few idle seconds
+      const idle = (now - lastInput) / 1000;
+      const drift = mode === 'window' ? (looking() ? 0 : 1) : Math.min(Math.max(idle - 3, 0) / 2, 1);
+      view.lon += drift * (mode === 'window' ? 1.4 : 3) * dt; // the background turns slowly
+    }
+  }
+  view.lat = Math.max(-75, Math.min(75, view.lat));
+  const phi = THREE.MathUtils.degToRad(90 - view.lat), theta = THREE.MathUtils.degToRad(view.lon);
+  target.set(Math.sin(phi) * Math.cos(theta), Math.cos(phi), Math.sin(phi) * Math.sin(theta));
+  camera.lookAt(target);
+
+  if (!reduceMotion) tint.uniforms.uTime.value = now / 1000;
+  // brand tint in the window; a light grade in the full room so it still reads as the course's world
+  const u = tint.uniforms.uStrength, goal = mode === 'window' ? (looking() ? 0.25 : 1) : 0.22;
+  u.value += (goal - u.value) * Math.min(1, dt * 3);
+
+  renderer.clear(); renderer.render(scene, camera); renderer.render(tintScene, tintCamera);
+  requestAnimationFrame(tick);
+}
+wake();
+</script>
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="pl">
+<script>document.documentElement.classList.add('js')</script>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Akademia Kardiologii Zabiegowej 2026</title>
+<meta name="description" content="Kurs kardiologii interwencyjnej prowadzący przez pełną ścieżkę leczenia pacjenta: od diagnostyki i kwalifikacji, przez zabieg, po dalsze leczenie. Listopad 2026.">
+<meta property="og:title" content="Akademia Kardiologii Zabiegowej 2026">
+<meta property="og:image" content="media/hero360-poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* AKZ, simplified: one thing per screen. Brand from Figma "Branding" (AKZ v4). */
+:root {
+  --burgundy: #44001B;
+  --plum: #54104F;
+  --violet: #4A29DD;
+  --violet-deep: #3A1DB8;
+  --paper: #F7F4F7;
+  --ink: #23081C;
+  --muted: #6A5565;
+  --rule: #E5DAE3;
+  --font: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gutter: clamp(20px, 5vw, 72px);
+  --brand-field:
+    radial-gradient(55% 75% at 22% 58%, #4A29DD 0%, rgba(74,41,221,.55) 45%, rgba(74,41,221,0) 75%),
+    radial-gradient(45% 70% at 62% 30%, rgba(84,16,79,.95) 0%, rgba(84,16,79,0) 75%),
+    linear-gradient(90deg, #3B0F63 0%, #4A0A45 55%, #44001B 100%);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--burgundy); color: var(--ink); font: 400 18px/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul { margin: 0; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; border-radius: 4px; }
+.dark :focus-visible { outline-color: #fff; }
+.wrap { width: 100%; max-width: 980px; margin-inline: auto; padding-inline: var(--gutter); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px;
+  font: 500 17px/1 var(--font); letter-spacing: -.01em; text-decoration: none; white-space: nowrap;
+  transition: background-color .15s ease; -webkit-tap-highlight-color: transparent;
+}
+.btn-light { background: #fff; color: var(--burgundy); }
+@media (hover: hover) { .btn-light:hover { background: #F1E9F7; } }
+
+/* ---------- The room: fixed behind the first two screens ---------- */
+.room { position: fixed; inset: 0; z-index: 0; background: var(--burgundy); }
+.viewer { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; outline: none; }
+.viewer.dragging { cursor: grabbing; }
+.viewer canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity .8s ease; }
+.viewer.ready canvas { opacity: 1; }
+.dim { position: absolute; inset: 0; pointer-events: none; background: #14000C; opacity: var(--dim, 0); }
+
+/* screens 1-2 sit over the room and let drags through to it */
+.over { position: relative; z-index: 1; pointer-events: none; color: #fff; }
+.over a, .over button { pointer-events: auto; }
+
+.hero { height: 100vh; height: 100svh; min-height: 520px; display: grid; place-items: center; align-content: center; gap: clamp(36px, 6vh, 56px); position: relative; }
+.hero > .btn { opacity: var(--fade, 1); transform: translateY(var(--lift, 0px)); }
+.lockup { --mark: clamp(150px, 15vw, 288px); display: flex; align-items: flex-start; gap: calc(var(--mark) * .105); margin: 0;
+  opacity: var(--fade, 1); transform: translateY(var(--lift, 0px)); }
+.lockup img { display: block; height: auto; }
+.lockup .mark { width: var(--mark); }
+.lockup .name { width: calc(var(--mark) * .5215); }
+.hero-foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: max(28px, env(safe-area-inset-bottom));
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; opacity: var(--fade, 1); }
+.hint { font-size: 14px; color: rgba(255,255,255,.85); opacity: 0; transition: opacity .6s ease; }
+.hint.on { opacity: 1; }
+.pause { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); background: rgba(20,0,12,.25); color: #fff;
+  display: grid; place-items: center; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.pause svg { display: block; }
+
+.statement { min-height: 100vh; min-height: 100svh; display: grid; align-items: center; }
+.statement p { font-size: clamp(34px, 5.4vw, 76px); line-height: 1.06; font-weight: 500; letter-spacing: -.035em; max-width: 15ch; text-wrap: balance;
+  opacity: var(--o, 1); transform: translateY(var(--y, 0px)); }
+
+/* ---------- Screens 3-4 on solid ground ---------- */
+.ground { position: relative; z-index: 2; }
+.program { background: var(--paper); padding-block: clamp(80px, 12vw, 160px); border-radius: 28px 28px 0 0; }
+.program h2 { font-size: clamp(30px, 3.6vw, 48px); line-height: 1.05; font-weight: 600; letter-spacing: -.03em; }
+/* Program: six sessions set as type on a ruled grid, like a printed schedule */
+.entries { list-style: none; padding: 0; margin-top: clamp(32px, 5vw, 56px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(20px, 3vw, 40px); }
+.entry {
+  display: grid; grid-template-rows: auto 1fr auto; gap: 14px; height: 100%; padding: 16px 0 clamp(32px, 4vw, 48px);
+  border-top: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; -webkit-tap-highlight-color: transparent;
+}
+.entry-top { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--muted); }
+.entry-no { font-variant-numeric: tabular-nums; color: var(--ink); }
+.entry-name { font-size: clamp(24px, 2.6vw, 36px); line-height: 1.06; font-weight: 500; letter-spacing: -.03em; text-wrap: balance; transition: color .15s ease; }
+.entry-case { font-size: 15px; line-height: 1.4; color: var(--muted); max-width: 30ch; }
+.entry-case span { display: block; color: var(--ink); font-weight: 500; }
+@media (hover: hover) { .entry:hover .entry-name { color: var(--violet); } }
+@media (max-width: 860px) { .entries { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) {
+  .entries { grid-template-columns: 1fr; }
+  .entry { grid-template-rows: none; grid-template-columns: 2.2em minmax(0, 1fr); column-gap: 8px; row-gap: 6px; padding: 14px 0 22px; }
+  .entry-top { display: contents; }
+  .entry-no { grid-row: 1 / span 3; padding-top: 4px; }
+  .entry-top > span:last-child { grid-column: 2; grid-row: 3; font-size: 13px; }
+  .entry-name { grid-column: 2; font-size: 22px; }
+  .entry-case { grid-column: 2; font-size: 14px; }
+}
+
+/* Partners: one-colour logos, sized to equal optical weight */
+.partners { background: var(--paper); padding-bottom: clamp(72px, 10vw, 128px); }
+.partners h2 { padding-top: 16px; border-top: 1.5px solid var(--ink); font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.logos { list-style: none; padding: 0; margin: clamp(28px, 4vw, 44px) 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: clamp(28px, 4vw, 44px) clamp(36px, 5vw, 64px); }
+.logos img { --u: clamp(26px, 2.6vw, 36px); display: block; height: calc(var(--u) * var(--k)); width: auto; max-width: 100%; object-fit: contain; }
+@media (max-width: 520px) { .logos { gap: 28px 32px; } .logos img { --u: 24px; } }
+
+/* Session details */
+.sessions { margin-top: 48px; display: grid; gap: 40px; }
+html.js .sessions { display: none; }
+.session h3, .dialog-body h3 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.15; font-weight: 600; letter-spacing: -.02em; text-wrap: balance; margin-bottom: 20px; }
+.talks { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+.talks li { font-size: 16.5px; line-height: 1.4; }
+.talks .kind { display: block; font-size: 13px; color: var(--violet); margin-bottom: 2px; }
+.talks .who { display: block; font-size: 14.5px; color: var(--muted); margin-top: 2px; }
+
+.session-dialog {
+  width: min(640px, calc(100% - 32px)); max-height: min(86vh, 760px); padding: 0; border: 0; border-radius: 24px;
+  background: var(--paper); color: var(--ink); box-shadow: 0 40px 100px rgba(30,0,20,.4);
+}
+.session-dialog::backdrop { background: rgba(40,0,25,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.session-dialog[open] { animation: rise .35s cubic-bezier(.2,.8,.2,1); }
+@keyframes rise { from { opacity: 0; transform: translateY(16px) scale(.98); } }
+.dialog-body { padding: clamp(28px, 4vw, 44px); padding-right: clamp(56px, 6vw, 72px); }
+.dialog-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--rule); background: #fff; color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .session-dialog[open] { animation: none; } }
+.note { margin-top: 18px; font-size: 14px; color: var(--muted); }
+
+.signup { background: var(--burgundy); background-image: var(--brand-field); color: #fff; padding-block: clamp(96px, 16vw, 200px) clamp(56px, 8vw, 96px); }
+.signup h2 { font-size: clamp(36px, 5.4vw, 76px); line-height: 1.04; font-weight: 500; letter-spacing: -.035em; max-width: 14ch; }
+.signup .meta { margin-top: 24px; font-size: 17px; color: rgba(255,255,255,.8); max-width: 46ch; }
+.signup .btn { margin-top: 36px; }
+.signup-foot { margin-top: clamp(80px, 12vw, 140px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; font-size: 14px; color: rgba(255,255,255,.65); }
+.signup-foot span { display: flex; align-items: center; gap: 12px; }
+.signup-foot img { width: 110px; height: auto; display: block; }
+
+/* Sign-up bar: appears once the first two screens are behind you, hides at the sign-up section */
+.bar {
+  position: fixed; z-index: 20; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); width: min(560px, calc(100% - 2 * var(--gutter)));
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 22px; border-radius: 999px; color: #fff;
+  background: linear-gradient(90deg, rgba(74,41,221,.82), rgba(68,0,27,.84));
+  -webkit-backdrop-filter: blur(18px) saturate(1.5); backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid rgba(255,255,255,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 14px 40px rgba(40,0,25,.3);
+  transform: translate(-50%, calc(100% + 32px)); visibility: hidden;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), visibility 0s linear .45s;
+}
+.bar.shown { transform: translate(-50%, 0); visibility: visible; transition: transform .45s cubic-bezier(.2,.8,.2,1), visibility 0s; }
+.bar img { width: 56px; height: auto; display: block; }
+.bar .btn { min-height: 44px; padding: 0 22px; }
+@media (max-width: 520px) { .bar .btn { flex: 1 1 auto; } .sessions summary { grid-template-columns: minmax(0, 1fr) 1ch; row-gap: 4px; } .sessions summary small { grid-row: 2; grid-column: 1; } }
+@media (prefers-reduced-motion: reduce) { .bar, .bar.shown { transition: none; } .lockup, .statement p { transform: none; } }
+</style>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+
+<div class="room" id="room">
+  <div class="viewer" id="viewer" tabindex="0" role="img"
+       aria-label="Nagranie 360° z pracowni hemodynamiki w trakcie zabiegu. Przeciągnij lub użyj strzałek, aby się rozejrzeć."></div>
+  <div class="dim" aria-hidden="true"></div>
+</div>
+
+<div class="over" id="top">
+  <header class="hero" id="hero">
+    <h1 class="lockup">
+      <img class="mark" src="media/akz-mark.svg" width="288" height="116" alt="AKZ">
+      <img class="name" src="media/akz-name.svg" width="150" height="96" alt="Akademia Kardiologii Zabiegowej">
+    </h1>
+    <a class="btn btn-light" href="#zapis">Zapisz się na kurs</a>
+    <div class="hero-foot">
+      <p class="hint" id="hint">Przeciągnij, aby rozejrzeć się po pracowni</p>
+      <button class="pause" id="pause" type="button" aria-label="Zatrzymaj nagranie">
+        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path id="pauseIcon" d="M3 2h3v10H3zM8 2h3v10H8z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="statement" aria-label="O kursie">
+    <div class="wrap"><p id="claim">Zobacz kardiologię interwencyjną z perspektywy operatora.</p></div>
+  </section>
+</div>
+
+<main class="ground">
+  <section class="program" id="program">
+    <div class="wrap">
+      <h2>Program</h2>
+      <ul class="entries">
+        <li><a class="entry" href="#s-pci" data-session="s-pci">
+          <span class="entry-top"><span class="entry-no">01</span><span>4 wykłady</span></span>
+          <span class="entry-name">Złożona PCI</span>
+          <span class="entry-case"><span>Zabieg</span>Hybryda DES + DEB w chorobie wielonaczyniowej</span>
+        </a></li>
+        <li><a class="entry" href="#s-tk" data-session="s-tk">
+          <span class="entry-top"><span class="entry-no">02</span><span>3 wykłady i panel</span></span>
+          <span class="entry-name">Planowanie PCI w tomografii</span>
+          <span class="entry-case"><span>Zabieg</span>PCI pod kontrolą angio-TK i obrazowania wewnątrznaczyniowego</span>
+        </a></li>
+        <li><a class="entry" href="#s-wapn" data-session="s-wapn">
+          <span class="entry-top"><span class="entry-no">03</span><span>4 wykłady</span></span>
+          <span class="entry-name">Zwapniała zmiana wieńcowa</span>
+          <span class="entry-case"><span>Zabieg</span>Litotrypsja krok po kroku</span>
+        </a></li>
+        <li><a class="entry" href="#s-anoca" data-session="s-anoca">
+          <span class="entry-top"><span class="entry-no">04</span><span>4 wykłady</span></span>
+          <span class="entry-name">Dławica mikrokrążeniowa</span>
+          <span class="entry-case"><span>Zabieg</span>Reduktor zatoki wieńcowej w dławicy opornej</span>
+        </a></li>
+        <li><a class="entry" href="#s-ffr" data-session="s-ffr">
+          <span class="entry-top"><span class="entry-no">05</span><span>3 wykłady</span></span>
+          <span class="entry-name">Ocena czynnościowa</span>
+          <span class="entry-case"><span>Zabieg</span>Cyfrowy kokpit pracowni kardiologii inwazyjnej</span>
+        </a></li>
+        <li><a class="entry" href="#s-abl" data-session="s-abl">
+          <span class="entry-top"><span class="entry-no">06</span><span>3 wykłady</span></span>
+          <span class="entry-name">Ablacja</span>
+          <span class="entry-case"><span>Zabieg</span>Zabieg ablacji z komentarzem operatorów</span>
+        </a></li>
+      </ul>
+      <p class="note">Kliknij sesję, aby zobaczyć wykłady i prowadzących. Program może ulec zmianie.</p>
+
+      <!-- Session details: shown in a dialog when JS runs, as plain sections otherwise -->
+      <div class="sessions">
+        <article class="session" id="s-pci">
+          <h3>Choroba wieńcowa i złożona PCI</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Jak poradzić sobie z masywnymi zwapnieniami w tętnicach wieńcowych: drogowskaz skutecznej i bezpiecznej interwencji<span class="who">prof. Janusz Kochman</span></li>
+            <li><span class="kind">Zabieg</span>Mniej metalu, więcej strategii: hybryda DES + DEB w chorobie wielonaczyniowej<span class="who">dr hab. n. med. Grzegorz Sobieszek, prof. Janusz Kochman, prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Dalsze leczenie</span>DAPT po PCI: gdzie jest miejsce tikagreloru?<span class="who">prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Terapia trójlekowa nadciśnienia: jak optymalizować leczenie obok RDN<span class="who">prof. Łukasz Kołtowski</span></li>
+          </ul>
+        </article>
+        <article class="session" id="s-tk">
+          <h3>Planowanie angioplastyki wieńcowej w tomografii komputerowej</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Miejsce tomografii komputerowej w planowaniu angioplastyki wieńcowej<span class="who">lek. Natalia Krajewska</span></li>
+            <li><span class="kind">Diagnostyka</span>Look into the future: jak FFR-CT zmienia ścieżki diagnostyczne przewlekłych zespołów wieńcowych<span class="who">prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Zabieg</span>Angioplastyka wieńcowa pod kontrolą angio-TK i obrazowania wewnątrznaczyniowego: od planowania po potwierdzenie efektu<span class="who">prof. Tomasz Roleder, prof. Łukasz Kołtowski, lek. Natalia Krajewska</span></li>
+            <li><span class="kind">Dyskusja</span>Panel dyskusyjny ekspertów</li>
+          </ul>
+        </article>
+        <article class="session" id="s-wapn">
+          <h3>Zwapniała zmiana wieńcowa</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Zwapniała blaszka w CT: zaplanuj PCI, zanim wejdziesz do pracowni<span class="who">lek. Natalia Krajewska</span></li>
+            <li><span class="kind">Zabieg</span>Litotrypsja krok po kroku: jak rozbić wapń i dobrze rozprężyć stent<span class="who">prof. Janusz Kochman, prof. Łukasz Kołtowski, lek. Natalia Krajewska</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Optymalizacja czynników ryzyka i leczenie przeciwdławicowe w PZW<span class="who">prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Riwaroksaban w PZW: dual pathway w praktyce<span class="who">prof. Paweł Balsam</span></li>
+          </ul>
+        </article>
+        <article class="session" id="s-anoca">
+          <h3>Dławica mikrokrążeniowa (ANOCA/INOCA)</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Diagnostyka i selekcja pacjentów do zabiegu<span class="who">dr n. med. Szymon Włodarczak</span></li>
+            <li><span class="kind">Diagnostyka</span>Look into the future: najnowsze doniesienia naukowe<span class="who">prof. Mariusz Tomaniak</span></li>
+            <li><span class="kind">Zabieg</span>Reduktor zatoki wieńcowej: nadzieja w dławicy opornej<span class="who">prof. Marek Grygier, prof. Łukasz Kołtowski</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Dławica bez zwężeń: rola ranolazyny w leczeniu<span class="who">prof. Łukasz Kołtowski</span></li>
+          </ul>
+        </article>
+        <article class="session" id="s-ffr">
+          <h3>Angioplastyka wieńcowa i ocena czynnościowa</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Ergonomia pracy, multimodalność i bezpieczeństwo w trakcie angioplastyki wieńcowej w ostrych zespołach wieńcowych<span class="who">prof. Aleksandra Gąsecka</span></li>
+            <li><span class="kind">Zabieg</span>Angioplastyka wieńcowa: jak wykorzystać pełen potencjał cyfrowego kokpitu pracowni kardiologii inwazyjnej<span class="who">prof. Łukasz Kołtowski, prof. Aleksandra Gąsecka</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Leczenie przeciwpłytkowe po angioplastyce wieńcowej: od wytycznych po opcje indywidualizacji terapii<span class="who">prof. Mariusz Tomaniak</span></li>
+          </ul>
+        </article>
+        <article class="session" id="s-abl">
+          <h3>Ablacja</h3>
+          <ul class="talks">
+            <li><span class="kind">Diagnostyka</span>Temat wkrótce<span class="who">prof. Paweł Balsam</span></li>
+            <li><span class="kind">Zabieg</span>Ablacja<span class="who">prof. Piotr Lodziński, prof. Michał Marchel</span></li>
+            <li><span class="kind">Dalsze leczenie</span>Niewydolność serca i migotanie przedsionków<span class="who">prof. Marcin Grabowski</span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <dialog class="session-dialog" id="sessionDialog" aria-labelledby="sessionDialogTitle">
+    <button class="dialog-close" type="button" aria-label="Zamknij" data-close>
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div class="dialog-body" id="sessionDialogBody"></div>
+  </dialog>
+
+  <section class="partners" aria-labelledby="partnersTitle">
+    <div class="wrap">
+      <h2 id="partnersTitle">Partnerzy</h2>
+      <ul class="logos">
+        <li><img src="media/partners/abbott.png" width="639" height="160" alt="Abbott" style="--k: 0.89" loading="lazy"></li>
+        <li><img src="media/partners/adamed.png" width="187" height="160" alt="Adamed" style="--k: 1.49" loading="lazy"></li>
+        <li><img src="media/partners/celon.png" width="346" height="160" alt="Celon Pharma" style="--k: 1.15" loading="lazy"></li>
+        <li><img src="media/partners/hemolens.png" width="1956" height="160" alt="Hemolens Diagnostics" style="--k: 0.55" loading="lazy"></li>
+        <li><img src="media/partners/jnj-shockwave.png" width="1526" height="160" alt="Johnson & Johnson MedTech, Shockwave Medical" style="--k: 0.62" loading="lazy"></li>
+        <li><img src="media/partners/krka.png" width="516" height="160" alt="KRKA" style="--k: 0.97" loading="lazy"></li>
+        <li><img src="media/partners/meril.png" width="404" height="160" alt="Meril" style="--k: 1.08" loading="lazy"></li>
+        <li><img src="media/partners/msn.png" width="400" height="160" alt="MSN" style="--k: 1.08" loading="lazy"></li>
+        <li><img src="media/partners/philips.png" width="874" height="160" alt="Philips" style="--k: 0.78" loading="lazy"></li>
+        <li><img src="media/partners/servier.png" width="619" height="160" alt="Servier" style="--k: 0.90" loading="lazy"></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="signup dark" id="zapis">
+    <div class="wrap">
+      <h2>Listopad 2026</h2>
+      <p class="meta">Kierownik naukowy: prof. dr hab. n. med. Łukasz Kołtowski, FESC. Kurs dla lekarzy.</p>
+      <!-- TODO: docelowy link do zapisu -->
+      <a class="btn btn-light" href="#">Zapisz się na kurs</a>
+      <div class="signup-foot">
+        <span>Organizator <img src="media/remedium-logo.svg" width="485" height="84" alt="remedium"></span>
+        <span>Akademia Kardiologii Zabiegowej 2026</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<aside class="bar dark" id="bar" aria-label="Zapis na kurs">
+  <img src="media/akz-mark.svg" width="288" height="116" alt="Akademia Kardiologii Zabiegowej">
+  <!-- TODO: docelowy link do zapisu -->
+  <a class="btn btn-light" href="#">Zapisz się na kurs</a>
+</aside>
+
+<script>
+// Scroll: the lockup lifts away, the room dims, the claim fades in. Sign-up bar between intro and sign-up section.
+(() => {
+  const root = document.documentElement, room = document.getElementById('room'), hero = document.getElementById('hero');
+  const claim = document.getElementById('claim'), bar = document.getElementById('bar');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  let queued = false;
+  function frame() {
+    queued = false;
+    const vh = innerHeight, p = clamp(scrollY / (vh * 0.8));
+    hero.style.setProperty('--fade', (1 - p * 1.3).toFixed(3));
+    if (!reduce) hero.style.setProperty('--lift', (-p * 50).toFixed(1) + 'px');
+    room.style.setProperty('--dim', (0.6 * p).toFixed(3));
+    const r = claim.getBoundingClientRect(), t = clamp((vh * 0.9 - r.top) / (vh * 0.45));
+    claim.style.setProperty('--o', (reduce ? 1 : t).toFixed(3));
+    if (!reduce) claim.style.setProperty('--y', ((1 - t) * 28).toFixed(1) + 'px');
+  }
+  const request = () => { if (!queued) { queued = true; requestAnimationFrame(frame); } };
+  addEventListener('scroll', request, { passive: true }); addEventListener('resize', request); frame();
+
+  if ('IntersectionObserver' in window) {
+    const seen = new Set();
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target));
+      bar.classList.toggle('shown', seen.size === 0);
+    });
+    io.observe(document.getElementById('top')); io.observe(document.getElementById('zapis'));
+  }
+})();
+</script>
+
+<script>
+// Program: an entry opens its session in a dialog (without JS the entries link to the sections below).
+(() => {
+  const dialog = document.getElementById('sessionDialog'), body = document.getElementById('sessionDialogBody');
+  if (!dialog || typeof dialog.showModal !== 'function') { document.documentElement.classList.remove('js'); return; }
+  let opener = null;
+  document.querySelectorAll('.entry').forEach((entry) => entry.addEventListener('click', (e) => {
+    e.preventDefault();
+    const src = document.getElementById(entry.dataset.session);
+    body.innerHTML = src.innerHTML;
+    const h = body.querySelector('h3'); h.id = 'sessionDialogTitle';
+    opener = entry; dialog.showModal();
+  }));
+  dialog.addEventListener('click', (e) => { if (e.target === dialog || e.target.closest('[data-close]')) dialog.close(); });
+  dialog.addEventListener('close', () => opener && opener.focus());
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+const viewer = document.getElementById('viewer');
+const hint = document.getElementById('hint');
+const pause = document.getElementById('pause');
+const pauseIcon = document.getElementById('pauseIcon');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Degrees; lon maps to the panorama's horizontal axis (u = lon / 360). Starts on the team at the table.
+const view = { lon: 162, lat: -8, vLon: 0, vLat: 0 };
+
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' }); }
+catch (e) { viewer.style.background = 'center / cover url(media/hero360-poster.jpg)'; pause.hidden = true; throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.autoClear = false;
+viewer.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, 1, 1, 1100);
+const sphere = new THREE.SphereGeometry(500, 72, 48); sphere.scale(-1, 1, 1);
+const material = new THREE.MeshBasicMaterial();
+scene.add(new THREE.Mesh(sphere, material));
+
+// Brand treatment from the key visual: footage "darkened" into the violet-burgundy field (MIN blend).
+// The violet glow drifts slowly and leans toward the cursor.
+const tintScene = new THREE.Scene(), tintCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const tint = new THREE.ShaderMaterial({
+  uniforms: { uStrength: { value: 1 }, uTime: { value: 0 }, uShift: { value: new THREE.Vector2() } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: `
+    varying vec2 vUv; uniform float uStrength; uniform float uTime; uniform vec2 uShift;
+    vec3 hex(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
+    float blob(vec2 p, vec2 c, vec2 r){ return length((p - c) / r); }
+    void main(){
+      vec2 p = vec2(vUv.x, 1.0 - vUv.y);
+      vec3 col = p.x < 0.55 ? mix(hex(59.,15.,99.), hex(74.,10.,69.), p.x / 0.55) : mix(hex(74.,10.,69.), hex(68.,0.,27.), (p.x - 0.55) / 0.45);
+      vec2 c2 = vec2(0.62, 0.30) + vec2(cos(uTime * 0.09), sin(uTime * 0.12)) * vec2(0.06, 0.05) - uShift * 0.4;
+      col = mix(col, hex(84.,16.,79.), 0.95 * (1.0 - smoothstep(0.0, 0.75, blob(p, c2, vec2(0.45, 0.70)))));
+      vec2 c1 = vec2(0.22, 0.58) + vec2(sin(uTime * 0.13), cos(uTime * 0.10)) * vec2(0.07, 0.05) + uShift;
+      float d1 = blob(p, c1, vec2(0.55, 0.75) * (1.0 + 0.04 * sin(uTime * 0.21)));
+      float a1 = d1 < 0.45 ? mix(1.0, 0.55, d1 / 0.45) : 0.55 * (1.0 - smoothstep(0.45, 0.75, d1));
+      col = mix(col, hex(74.,41.,221.), a1);
+      gl_FragColor = vec4(mix(vec3(1.0), col, uStrength), 1.0);
+    }`,
+  depthTest: false, depthWrite: false, blending: THREE.CustomBlending, blendEquation: THREE.MinEquation,
+});
+tintScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), tint));
+
+new THREE.TextureLoader().load('media/hero360-poster.jpg', (t) => {
+  t.colorSpace = THREE.SRGBColorSpace;
+  if (!material.map) { material.map = t; material.needsUpdate = true; }
+  viewer.classList.add('ready');
+});
+
+const small = Math.min(screen.width, screen.height) < 768 || renderer.capabilities.maxTextureSize < 4096; // phones and weaker GPUs get the 2560px file
+const video = document.createElement('video');
+Object.assign(video, { muted: true, loop: true, playsInline: true, preload: 'auto' });
+video.setAttribute('muted', ''); video.setAttribute('playsinline', '');
+video.src = small ? 'media/hero360-sd.mp4' : 'media/hero360-hd.mp4';
+video.addEventListener('playing', () => {
+  if (!(material.map instanceof THREE.VideoTexture)) {
+    const vt = new THREE.VideoTexture(video);
+    vt.colorSpace = THREE.SRGBColorSpace; vt.minFilter = THREE.LinearFilter; vt.generateMipmaps = false;
+    material.map = vt; material.needsUpdate = true; viewer.classList.add('ready');
+  }
+});
+const setPauseUi = () => {
+  const paused = video.paused;
+  pause.setAttribute('aria-label', paused ? 'Odtwórz nagranie' : 'Zatrzymaj nagranie');
+  pauseIcon.setAttribute('d', paused ? 'M3 1.5l9 5.5-9 5.5z' : 'M3 2h3v10H3zM8 2h3v10H8z');
+};
+video.addEventListener('play', setPauseUi); video.addEventListener('pause', setPauseUi);
+let userPaused = reduceMotion;
+const tryPlay = () => video.play().catch(setPauseUi);
+if (!reduceMotion) tryPlay(); setPauseUi();
+pause.addEventListener('click', () => { if (video.paused) { userPaused = false; video.play(); } else { userPaused = true; video.pause(); } });
+
+// ---- Looking around ----
+let dragging = false, lastX = 0, lastY = 0, lastT = 0, lastInput = performance.now(), interacted = false, looking = false;
+const touched = () => { lastInput = performance.now(); looking = true; if (!interacted) { interacted = true; hint.classList.remove('on'); } };
+// the hint only shows if nobody has tried to look around after a few seconds
+setTimeout(() => { if (!interacted) hint.classList.add('on'); }, 3500);
+
+viewer.addEventListener('pointerdown', (e) => {
+  if (e.button !== 0) return;
+  dragging = true; lastX = e.clientX; lastY = e.clientY; lastT = performance.now(); view.vLon = view.vLat = 0;
+  viewer.setPointerCapture(e.pointerId); viewer.classList.add('dragging'); touched();
+});
+viewer.addEventListener('pointermove', (e) => {
+  if (!dragging) return;
+  const now = performance.now(), dt = Math.max(now - lastT, 1), k = camera.fov / viewer.clientHeight;
+  const dLon = -(e.clientX - lastX) * k, dLat = e.pointerType === 'mouse' ? (e.clientY - lastY) * k : 0; // touch: vertical swipes scroll the page
+  view.lon += dLon; view.lat += dLat; view.vLon = dLon / dt * 16; view.vLat = dLat / dt * 16;
+  lastX = e.clientX; lastY = e.clientY; lastT = now; touched();
+});
+const endDrag = () => { dragging = false; viewer.classList.remove('dragging'); lastInput = performance.now(); };
+viewer.addEventListener('pointerup', endDrag);
+viewer.addEventListener('pointercancel', () => { endDrag(); view.vLon = view.vLat = 0; });
+viewer.addEventListener('keydown', (e) => {
+  const step = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, 8], ArrowDown: [0, -8] }[e.key];
+  if (!step) return;
+  e.preventDefault(); view.vLon = step[0] / 8; view.vLat = step[1] / 8; touched();
+});
+
+const glow = { x: 0.22, y: 0.58, tx: 0.22, ty: 0.58 };
+addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch') { glow.tx = e.clientX / innerWidth; glow.ty = e.clientY / innerHeight; } });
+document.documentElement.addEventListener('pointerleave', () => { glow.tx = 0.22; glow.ty = 0.58; });
+
+function resize() {
+  const w = viewer.clientWidth, h = viewer.clientHeight;
+  camera.aspect = w / h; camera.fov = w < h ? 92 : 72; camera.updateProjectionMatrix();
+  renderer.setSize(w, h, false);
+}
+addEventListener('resize', resize); resize();
+
+// The room is only visible behind the first two screens; stop rendering once they are scrolled away.
+let visible = true, last = performance.now();
+new IntersectionObserver(([e]) => {
+  visible = e.isIntersecting;
+  if (visible) { last = performance.now(); if (!userPaused) tryPlay(); requestAnimationFrame(tick); } else video.pause();
+}).observe(document.getElementById('top'));
+
+const target = new THREE.Vector3();
+function tick(now) {
+  if (!visible) return;
+  const dt = Math.min((now - last) / 1000, 0.1); last = now;
+  if (!dragging) {
+    view.lon += view.vLon; view.lat += view.vLat;
+    const decay = reduceMotion ? 0 : Math.pow(0.9, dt * 60); view.vLon *= decay; view.vLat *= decay;
+    const idle = (now - lastInput) / 1000;
+    if (!reduceMotion && idle > 3) view.lon += Math.min((idle - 3) / 2, 1) * 3 * dt;
+    if (idle > 2.5) looking = false;
+  }
+  view.lat = Math.max(-75, Math.min(75, view.lat));
+  const phi = THREE.MathUtils.degToRad(90 - view.lat), theta = THREE.MathUtils.degToRad(view.lon);
+  target.set(Math.sin(phi) * Math.cos(theta), Math.cos(phi), Math.sin(phi) * Math.sin(theta));
+  camera.lookAt(target);
+
+  if (!reduceMotion) {
+    tint.uniforms.uTime.value = now / 1000;
+    const k = Math.min(1, dt * 1.8); glow.x += (glow.tx - glow.x) * k; glow.y += (glow.ty - glow.y) * k;
+    tint.uniforms.uShift.value.set((glow.x - 0.22) * 0.45, (glow.y - 0.58) * 0.45);
+  }
+  // while someone looks around, the tint eases off so the room reads in true colour
+  const u = tint.uniforms.uStrength, goal = looking ? 0.15 : 1;
+  u.value += (goal - u.value) * Math.min(1, dt * (goal < u.value ? 5 : 1.6));
+
+  renderer.clear(); renderer.render(scene, camera); renderer.render(tintScene, tintCamera);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

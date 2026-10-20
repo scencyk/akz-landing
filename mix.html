@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Akademia Kardiologii Zabiegowej 2026 (wariant: mix)</title>
+<meta name="description" content="Kurs kardiologii interwencyjnej, który prowadzi przez pełną ścieżkę leczenia pacjenta: od diagnostyki i kwalifikacji, przez procedurę, po farmakoterapię i dalsze prowadzenie.">
+<meta property="og:title" content="Akademia Kardiologii Zabiegowej 2026">
+<meta property="og:description" content="Zobacz kardiologię interwencyjną z perspektywy operatora.">
+<meta property="og:image" content="media/hero360-poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="media/hero360-poster.jpg">
+<style>
+/* Brand: AKZ key visual (Figma "Branding" / AKZ v4) */
+:root {
+  --burgundy: #44001B;
+  --plum: #54104F;
+  --violet: #4A29DD;
+  --violet-deep: #3A1DB8;
+  --paper: #F7F4F7;
+  --surface: #FFFFFF;
+  --ink: #23081C;
+  --muted: #6A5565;
+  --rule: #E5DAE3;
+  --violet-tint: #ECE8FC;
+  --font: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gutter: clamp(16px, 4vw, 56px);
+  --measure: 62ch;
+  /* the brand gradient that the photo is "darkened" into */
+  --brand-field:
+    radial-gradient(55% 75% at 22% 58%, #4A29DD 0%, rgba(74,41,221,.55) 45%, rgba(74,41,221,0) 75%),
+    radial-gradient(45% 70% at 62% 30%, rgba(84,16,79,.95) 0%, rgba(84,16,79,0) 75%),
+    linear-gradient(90deg, #3B0F63 0%, #4A0A45 55%, #44001B 100%);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--font); font-size: 18px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+h1, h2, h3, p, ul, ol { margin: 0; }
+a { color: var(--violet); text-underline-offset: .18em; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; border-radius: 4px; }
+.hero :focus-visible, .final :focus-visible { outline-color: #fff; }
+.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: .5em; min-height: 50px; padding: 0 24px;
+  border-radius: 999px; font: 500 17px/1 var(--font); letter-spacing: -.01em; text-decoration: none; cursor: pointer;
+  border: 1.5px solid transparent; transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  -webkit-tap-highlight-color: transparent; white-space: nowrap;
+}
+.btn-primary { background: var(--violet); color: #fff; }
+.btn-light { background: #fff; color: var(--burgundy); }
+.btn-ghost { color: #fff; border-color: rgba(255,255,255,.55); background: rgba(40,0,30,.2); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+@media (hover: hover) {
+  .btn-primary:hover { background: var(--violet-deep); }
+  .btn-light:hover { background: #F1E9F7; }
+  .btn-ghost:hover { border-color: #fff; background: rgba(40,0,30,.36); }
+}
+
+/* ---------- Hero: 360° viewer in the AKZ key-visual treatment ---------- */
+.hero { position: relative; height: 100vh; height: 100svh; min-height: 600px; background: var(--burgundy); color: #fff; overflow: hidden; }
+.viewer { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; outline: none; }
+.viewer.dragging { cursor: grabbing; }
+.viewer canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity .8s ease; }
+.viewer.ready canvas { opacity: 1; }
+.hero::after {
+  /* keeps the copy readable whatever part of the room is behind it */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(34,0,22,.82) 0%, rgba(34,0,22,.45) 32%, rgba(34,0,22,0) 60%),
+    linear-gradient(to bottom, rgba(34,0,22,.35) 0%, rgba(34,0,22,0) 28%);
+}
+.hero-top, .hero-bottom { position: absolute; z-index: 2; left: var(--gutter); right: var(--gutter); pointer-events: none; }
+.hero-top > *, .hero-bottom > * { pointer-events: auto; }
+.hero-top { top: max(clamp(28px, 9vh, 120px), env(safe-area-inset-top)); display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+.hero-bottom { bottom: max(clamp(28px, 6vh, 64px), env(safe-area-inset-bottom)); display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
+
+/* Lockup: vector AKZ logo from Figma (Branding, node 23312:299). Name is 0.52 of the mark's width, gap 0.105, tops aligned. */
+.lockup { --mark: clamp(128px, 12vw, 220px); display: flex; align-items: flex-start; gap: calc(var(--mark) * .105); text-decoration: none; }
+.lockup img { display: block; height: auto; }
+.lockup-mark { width: var(--mark); }
+.lockup-name { width: calc(var(--mark) * .5215); }
+.remedium { display: block; width: clamp(104px, 8.5vw, 150px); height: auto; }
+
+.hero-copy { max-width: 640px; }
+.hero h1 { font-size: clamp(26px, 2.7vw, 42px); line-height: 1.08; letter-spacing: -.02em; font-weight: 500; max-width: 20ch; text-wrap: balance; }
+.hero-lede { margin-top: 14px; max-width: 46ch; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.45; color: rgba(255,255,255,.82); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+/* Panorama strip: where in the room you are looking; click or drag to jump */
+.hero-nav { flex: none; width: 260px; display: grid; gap: 10px; justify-items: end; }
+.strip {
+  position: relative; width: 260px; height: 78px; border-radius: 10px; overflow: hidden; cursor: pointer; touch-action: none;
+  background: center 50% / 100% auto no-repeat url("media/hero360-poster.jpg");
+  box-shadow: 0 0 0 1px rgba(255,255,255,.35), 0 8px 24px rgba(20,0,15,.4);
+}
+.strip::before { content: ""; position: absolute; inset: 0; background: var(--brand-field); mix-blend-mode: darken; opacity: .9; }
+.strip-window { position: absolute; top: 0; height: 100%; border: 2px solid #fff; border-radius: 6px; background: rgba(255,255,255,.1); will-change: transform; }
+.hint { display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 1.3; color: rgba(255,255,255,.9); text-align: right; transition: opacity .5s ease; }
+.hint svg { flex: none; }
+.hint.gone { opacity: 0; }
+.play-toggle { font: 500 14px/1 var(--font); color: #fff; background: none; border: 0; padding: 6px 0; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+.play-toggle[hidden] { display: none; }
+
+@media (max-width: 820px) {
+  .hero-top { top: max(24px, env(safe-area-inset-top)); }
+  .lockup { --mark: clamp(112px, 34vw, 150px); }
+  .remedium { width: 96px; }
+  .hero-bottom { flex-direction: column; align-items: stretch; gap: 22px; bottom: max(24px, env(safe-area-inset-bottom)); }
+  .hero-nav { order: -1; width: auto; justify-items: start; }
+  .strip { width: min(220px, 60vw); height: 62px; }
+  .hint { text-align: left; font-size: 13px; }
+  .hero-actions { margin-top: 20px; }
+  .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
+}
+@media (max-width: 420px) { .hero-top { flex-direction: column-reverse; gap: 18px; } }
+@media (max-width: 820px) and (max-height: 700px) { .hero-lede { display: none; } }
+
+/* ---------- Sections ---------- */
+section { padding-block: clamp(72px, 10vw, 140px); }
+section + section { border-top: 1px solid var(--rule); }
+.split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 6vw, 96px); align-items: start; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+h2 { font-size: clamp(32px, 4vw, 56px); line-height: 1.04; letter-spacing: -.03em; font-weight: 700; text-wrap: balance; }
+.prose { max-width: var(--measure); }
+.prose p + p { margin-top: 1em; }
+.prose .lead { font-size: clamp(19px, 1.7vw, 22px); line-height: 1.5; letter-spacing: -.01em; }
+
+/* 360 band */
+.vr { background: var(--surface); }
+.vr h2 { max-width: 14ch; }
+.formats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding: 0; list-style: none; }
+.formats li { padding: 8px 15px; border-radius: 999px; background: var(--violet-tint); color: var(--violet-deep); font-size: 15px; font-weight: 500; }
+.back-link { display: inline-block; margin-top: 28px; font-weight: 500; }
+
+/* Case path: the course's actual sequence */
+.path { list-style: none; padding: 0; margin-top: clamp(48px, 7vw, 88px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); counter-reset: step; position: relative; }
+.path::before { content: ""; position: absolute; left: 0; right: 0; top: 15px; height: 2px; background: linear-gradient(to right, var(--violet), var(--plum) 70%, var(--burgundy)); opacity: .4; }
+.path li { position: relative; padding-right: 24px; counter-increment: step; }
+.path li::before {
+  content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--violet); color: #fff; font-size: 15px; font-weight: 700; position: relative;
+}
+.path li:nth-child(2)::before { background: #5A1C9E; }
+.path li:nth-child(3)::before { background: var(--plum); }
+.path li:nth-child(4)::before { background: var(--burgundy); }
+.path h3 { margin-top: 18px; font-size: 20px; line-height: 1.25; font-weight: 600; letter-spacing: -.015em; }
+.path p { margin-top: 6px; font-size: 16px; line-height: 1.5; color: var(--muted); max-width: 26ch; }
+@media (max-width: 860px) {
+  .path { grid-template-columns: 1fr; gap: 26px; }
+  .path::before { left: 15px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; background: linear-gradient(to bottom, var(--violet), var(--plum) 70%, var(--burgundy)); }
+  .path li { padding: 0 0 0 52px; }
+  .path li::before { position: absolute; left: 0; top: 0; }
+  .path h3 { margin-top: 4px; }
+}
+
+/* Program: session switcher. One session at a time, its case path read top to bottom. */
+.program-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 40px; }
+.director { font-size: 16px; color: var(--muted); max-width: 40ch; }
+.director strong { display: block; color: var(--ink); font-weight: 600; font-size: 18px; }
+.program { margin-top: 40px; display: grid; grid-template-columns: minmax(240px, 4fr) minmax(0, 8fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.tabs { display: grid; gap: 6px; position: sticky; top: 24px; }
+.tab {
+  display: grid; gap: 2px; width: 100%; text-align: left; padding: 14px 18px; border-radius: 14px; border: 0; cursor: pointer;
+  background: transparent; color: var(--ink); font: 500 18px/1.25 var(--font); letter-spacing: -.015em;
+  transition: background-color .15s ease, color .15s ease; -webkit-tap-highlight-color: transparent;
+}
+.tab small { font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+@media (hover: hover) { .tab:hover { background: var(--violet-tint); } }
+.tab[aria-selected="true"] { background: var(--burgundy); background-image: var(--brand-field); color: #fff; }
+.tab[aria-selected="true"] small { color: rgba(255,255,255,.75); }
+
+.panel { background: var(--surface); border-radius: 20px; padding: clamp(22px, 3vw, 36px); box-shadow: 0 1px 0 var(--rule), 0 0 0 1px var(--rule); }
+.panel[hidden] { display: none; }
+/* desktop: stack panels in one cell so switching sessions never makes the page jump */
+@media (min-width: 861px) {
+  .panels { display: grid; }
+  .panel { grid-area: 1 / 1; }
+  .panel[hidden] { display: block; visibility: hidden; }
+}
+.panel h3 { font-size: clamp(22px, 2.1vw, 28px); line-height: 1.15; font-weight: 600; letter-spacing: -.02em; text-wrap: balance; }
+.panel-meta { margin-top: 6px; font-size: 15px; color: var(--muted); }
+.stages { list-style: none; padding: 0; margin: 24px 0 0; display: grid; }
+.stages > li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 4px 20px; padding: 16px 0; border-top: 1px solid var(--rule); }
+.stage-label { align-self: start; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--violet); padding-top: 2px; }
+.stage-label::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; flex: none; }
+.stages > li:nth-child(2) .stage-label { color: var(--plum); }
+.stages > li:nth-child(3) .stage-label { color: var(--burgundy); }
+.talks { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.talks li { font-size: 16.5px; line-height: 1.4; }
+.talks .who { display: block; margin-top: 2px; font-size: 14.5px; color: var(--muted); }
+.stages > li.is-case .talks { background: var(--burgundy); background-image: var(--brand-field); color: #fff; border-radius: 14px; padding: 14px 18px; }
+.stages > li.is-case .who { color: rgba(255,255,255,.78); }
+.note { margin-top: 20px; font-size: 14.5px; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .program { grid-template-columns: 1fr; margin-top: 28px; }
+  /* tabs become a swipeable row of pills */
+  .tabs { position: static; display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; margin-inline: calc(-1 * var(--gutter)); padding: 2px var(--gutter) 6px; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex: none; width: auto; scroll-snap-align: start; padding: 10px 16px; border-radius: 999px; font-size: 15.5px; white-space: nowrap; box-shadow: inset 0 0 0 1px var(--rule); }
+  .tab[aria-selected="true"] { box-shadow: none; }
+  .tab small { display: none; }
+  .stages > li { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* What / who */
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(40px, 6vw, 96px); }
+@media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+.duo h2 { font-size: clamp(28px, 2.8vw, 40px); }
+.checks { list-style: none; padding: 0; margin-top: 24px; display: grid; gap: 14px; max-width: 52ch; }
+.checks li { position: relative; padding-left: 30px; }
+.checks li::before { content: ""; position: absolute; left: 2px; top: .52em; width: 12px; height: 7px; border-left: 2px solid var(--violet); border-bottom: 2px solid var(--violet); transform: rotate(-45deg); }
+.duo .prose { margin-top: 24px; }
+
+/* Final CTA: the key-visual field again, without footage */
+.final { background: var(--burgundy); background-image: var(--brand-field); color: #fff; border-top: 0; }
+.final h2 { max-width: 16ch; }
+.final p { margin-top: 18px; max-width: 52ch; color: rgba(255,255,255,.82); font-size: 19px; }
+.final .btn { margin-top: 32px; }
+footer { background: var(--burgundy); color: rgba(255,255,255,.65); font-size: 14px; padding: 28px 0 max(32px, env(safe-area-inset-bottom)); }
+footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+footer .org { display: flex; align-items: center; gap: 14px; }
+footer .org img { width: 120px; height: auto; display: block; }
+/* Sign-up bar: slides in once the hero is scrolled away, steps aside when the final CTA is on screen.
+   Frosted glass in the brand colours; a violet light follows the cursor across it. */
+@property --mx { syntax: '<percentage>'; inherits: false; initial-value: 18%; }
+@property --my { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --glow { syntax: '<number>'; inherits: false; initial-value: .55; }
+.signup-bar {
+  position: fixed; z-index: 20; left: 50%; bottom: max(16px, env(safe-area-inset-bottom));
+  width: min(880px, calc(100% - 2 * var(--gutter)));
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 10px 10px 10px 22px; border-radius: 999px; color: #fff; overflow: hidden; isolation: isolate;
+  background:
+    radial-gradient(220px 140px at var(--mx) var(--my), rgba(124,92,255, var(--glow)), rgba(124,92,255,0) 70%),
+    linear-gradient(90deg, rgba(74,41,221,.8) 0%, rgba(84,16,79,.8) 58%, rgba(68,0,27,.82) 100%);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5); backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(255,255,255,.06), 0 14px 40px rgba(40,0,25,.3);
+  transform: translate(-50%, calc(100% + 32px)); visibility: hidden;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), visibility 0s linear .45s, --mx .5s ease-out, --my .5s ease-out, --glow .4s ease;
+}
+/* glass sheen along the top edge, brightest where the cursor is */
+.signup-bar::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(180px 60px at var(--mx) 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 70%),
+              linear-gradient(to bottom, rgba(255,255,255,.1), rgba(255,255,255,0) 45%);
+}
+.signup-bar.hot { --glow: .9; }
+.signup-bar.shown { transform: translate(-50%, 0); visibility: visible; transition: transform .45s cubic-bezier(.2,.8,.2,1), visibility 0s, --mx .5s ease-out, --my .5s ease-out, --glow .4s ease; }
+.signup-bar-name { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.signup-bar-mark { display: block; width: 64px; height: auto; flex: none; }
+.signup-bar-text { font-size: 15px; line-height: 1.3; color: rgba(255,255,255,.85); }
+.signup-bar-text { min-width: 0; }
+.signup-bar-text strong, .signup-bar-sub { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.signup-bar-text strong { color: #fff; font-weight: 500; font-size: 16px; }
+@media (max-width: 900px) { .signup-bar-sub { display: none; } }
+.signup-bar .btn { flex: none; min-height: 46px; }
+@media (max-width: 640px) {
+  .signup-bar { padding: 8px 8px 8px 18px; gap: 12px; }
+  .signup-bar-text { display: none; }
+  .signup-bar-mark { width: 54px; }
+  .signup-bar .btn { flex: 1 1 auto; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .signup-bar, .signup-bar.shown { transition: none; } }
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) { .signup-bar { background-color: var(--burgundy); } }
+/* ================= Variant: sheets over the 360° room ================= */
+body { background: var(--burgundy); }
+.backdrop { position: fixed; inset: 0; z-index: 0; background: var(--burgundy); }
+.backdrop .viewer { position: absolute; inset: 0; }
+.stage, main, .sheet-foot { position: relative; z-index: 1; }
+/* let drags on the gaps between sheets reach the room behind */
+.stage, main { pointer-events: none; }
+.stage > *, main > * { pointer-events: auto; }
+.stage-nav { pointer-events: none; }
+.stage-nav > * { pointer-events: auto; }
+
+.sheet {
+  --sheet-pad: clamp(24px, 5vw, 72px);
+  width: calc(100% - 2 * var(--gutter)); max-width: 1040px; margin: clamp(96px, 16vh, 200px) auto 0;
+  background: #FCFBFD; border-radius: 20px; box-shadow: 0 30px 80px rgba(30,0,20,.25);
+}
+section.sheet { padding-block: clamp(48px, 7vw, 96px); border-top: 0; }
+section.sheet + section.sheet { border-top: 0; }
+.sheet > .wrap { max-width: none; padding-inline: var(--sheet-pad); }
+.sheet .panel { background: var(--paper); box-shadow: none; }
+.vr { background: #FCFBFD; }
+.final.sheet { background: var(--burgundy); background-image: var(--brand-field); }
+
+/* first screen: the room above and around, the cover sheet like a printed page */
+.stage { padding-top: max(132px, 18vh); }
+.stage-nav { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: calc(100% - 2 * var(--gutter)); max-width: 1040px; height: max(132px, 18vh); display: flex; align-items: center; justify-content: flex-end; gap: 16px; color: #fff; }
+.hint-wrap { display: grid; justify-items: end; gap: 4px; }
+.hint { font-size: 14px; text-shadow: 0 1px 8px rgba(30,0,20,.5); }
+.strip { width: 220px; height: 64px; }
+.sheet-cover { margin-top: 0; padding: clamp(24px, 3.6vw, 48px) var(--sheet-pad); min-height: min(78vh, 760px); display: grid; grid-template-rows: auto 1fr auto; gap: clamp(32px, 6vh, 72px); color: var(--ink); }
+.cover-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.sheet-cover .lockup { --mark: clamp(96px, 8vw, 132px); }
+.cover-tag { font-size: 14px; line-height: 1.3; text-align: right; }
+.cover-body { align-self: center; margin-left: 29%; max-width: 640px; }
+.sheet-cover h1 { font-size: clamp(32px, 4vw, 56px); line-height: 1.1; font-weight: 400; letter-spacing: -.035em; text-wrap: balance; }
+.cover-lines { list-style: none; padding: 0; margin: clamp(24px, 4vh, 40px) 0 0; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.5; letter-spacing: -.015em; }
+.cover-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(28px, 4.5vh, 44px); }
+.btn-quiet { color: var(--ink); border-color: var(--rule); background: transparent; }
+@media (hover: hover) { .btn-quiet:hover { border-color: var(--ink); } }
+.cover-foot { display: grid; grid-template-columns: 29% 1fr 1fr auto; align-items: end; gap: 16px; font-size: 13px; line-height: 1.35; color: var(--ink); }
+.cover-foot-mark { width: 44px; height: auto; display: block; }
+.cover-org { display: grid; justify-items: end; gap: 6px; text-align: right; }
+.cover-org img { width: 96px; height: auto; display: block; }
+
+.sheet-foot { background: none; padding: 0; margin: 24px auto clamp(120px, 30vh, 320px); width: calc(100% - 2 * var(--gutter)); max-width: 1040px; }
+.sheet-foot .wrap { max-width: none; padding: 18px 28px; border-radius: 16px; background: rgba(35,8,28,.72); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+
+@media (max-width: 820px) {
+  .stage { padding-top: 36svh; }
+  .stage-nav { height: 36svh; align-items: flex-end; justify-content: space-between; padding-bottom: 16px; flex-direction: row-reverse; }
+  .hint-wrap { justify-items: start; }
+  .hint { font-size: 13px; text-align: left; }
+  .strip { width: 150px; height: 48px; }
+  .sheet { width: calc(100% - 24px); border-radius: 16px; margin-top: 22vh; }
+  .sheet-cover { margin-top: 0; min-height: 0; gap: 36px; }
+  .cover-body { margin-left: 0; }
+  .cover-actions .btn { flex: 1 1 auto; justify-content: center; }
+  .cover-foot { grid-template-columns: 1fr 1fr; row-gap: 18px; }
+  .cover-foot-mark { display: none; }
+  .cover-org { justify-items: start; text-align: left; }
+}
+@media (min-width: 1100px) { .sheet, .stage-nav, .sheet-foot { width: min(1040px, 76vw); } }
+/* ================= Mix: full-bleed hero -> statements -> framed room under sheets =================
+   Scroll choreography inspired by apple.com/apple-tv: the room dims while big statements reveal,
+   then it shrinks into a rounded frame and the sheets slide over it. Driven by --p-* set in JS. */
+.backdrop { clip-path: inset(var(--inset, 0px) round var(--radius, 0px)); }
+.dim { position: absolute; inset: 0; pointer-events: none; background: #14000C; opacity: var(--dim, 0); }
+.intro { position: relative; z-index: 1; pointer-events: none; }
+.intro-hero { position: relative; height: 100vh; height: 100svh; min-height: 520px; display: grid; place-items: center; color: #fff; }
+.intro-hero > * { pointer-events: auto; }
+.intro-lockup { margin: 0; display: flex; align-items: flex-start; gap: calc(var(--mark) * .105); --mark: clamp(150px, 15vw, 288px);
+  opacity: var(--hero-o, 1); transform: translateY(var(--hero-y, 0px)) scale(var(--hero-s, 1)); will-change: transform, opacity; }
+.intro-lockup img { display: block; height: auto; }
+.intro-lockup .lockup-mark { width: var(--mark); }
+.intro-lockup .lockup-name { width: calc(var(--mark) * .5215); }
+.intro-remedium { position: absolute; top: max(28px, env(safe-area-inset-top)); right: var(--gutter); width: clamp(100px, 8vw, 140px); height: auto; opacity: var(--hero-o, 1); }
+.intro-nav { position: absolute; right: var(--gutter); bottom: max(28px, env(safe-area-inset-bottom)); display: grid; gap: 8px; justify-items: end; opacity: var(--hero-o, 1); }
+.intro-nav .strip { width: 220px; height: 64px; }
+.intro-nav .hint { text-shadow: 0 1px 8px rgba(30,0,20,.5); }
+.scroll-cue { position: absolute; left: 50%; bottom: max(28px, env(safe-area-inset-bottom)); width: 1.5px; height: 44px; background: linear-gradient(to bottom, rgba(255,255,255,0), #fff); opacity: calc(var(--hero-o, 1) * .8); transform-origin: top; animation: cue 2.2s ease-in-out infinite; }
+@keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+.statements { position: relative; padding: 18vh 0 34vh; color: #fff; }
+.statements .wrap { max-width: 1040px; }
+.statement { font-size: clamp(30px, 4.4vw, 64px); line-height: 1.12; font-weight: 600; letter-spacing: -.03em; max-width: 24ch; text-wrap: balance;
+  opacity: var(--o, .16); transform: translateY(var(--y, 0px)); will-change: opacity, transform; }
+.statement + .statement { margin-top: clamp(40px, 9vh, 96px); }
+
+.cover-wrap { position: relative; z-index: 1; pointer-events: none; }
+.cover-wrap > * { pointer-events: auto; }
+.sheet-cover { margin-top: 0; }
+.sheet-cover .cover-title { font-size: clamp(32px, 4vw, 56px); line-height: 1.1; font-weight: 400; letter-spacing: -.035em; text-wrap: balance; }
+
+@media (max-width: 820px) {
+  .intro-lockup { --mark: clamp(132px, 40vw, 180px); }
+  .intro-nav { left: var(--gutter); right: auto; justify-items: start; }
+  .intro-nav .strip { width: 150px; height: 48px; }
+  .intro-nav .hint { font-size: 13px; text-align: left; }
+  .scroll-cue { display: none; }
+  .statements { padding: 12vh 0 26vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .statement { opacity: 1; transform: none; }
+  .scroll-cue { animation: none; }
+}
+</style>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+
+<!-- TODO: podmień na docelowy adres formularza zapisu -->
+<!-- The 360° room is the page background; content sits on sheets laid over it. -->
+<div class="backdrop" id="backdrop">
+  <div class="viewer" id="viewer" tabindex="0" role="img"
+       aria-label="Nagranie 360° z pracowni hemodynamiki w trakcie zabiegu. Przeciągnij lub użyj strzałek, aby się rozejrzeć.">
+  </div>
+  <div class="dim" id="dim" aria-hidden="true"></div>
+</div>
+
+<div class="intro" id="top">
+  <header class="intro-hero" id="introHero">
+    <img class="intro-remedium" src="media/remedium-logo.svg" width="485" height="84" alt="remedium">
+    <h1 class="intro-lockup">
+      <img class="lockup-mark" src="media/akz-mark.svg" width="288" height="116" alt="AKZ">
+      <img class="lockup-name" src="media/akz-name.svg" width="150" height="96" alt="Akademia Kardiologii Zabiegowej">
+    </h1>
+    <div class="intro-nav" id="introNav">
+      <div class="strip" id="strip" aria-hidden="true">
+        <div class="strip-window"></div><div class="strip-window"></div>
+      </div>
+      <p class="hint" id="hint">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9l-4 3 4 3M17 9l4 3-4 3M3 12h18"/></svg>
+        Przeciągnij, aby rozejrzeć się po pracowni
+      </p>
+      <button class="play-toggle" id="playToggle" type="button" hidden>Odtwórz nagranie</button>
+    </div>
+    <span class="scroll-cue" aria-hidden="true"></span>
+  </header>
+
+  <section class="statements" aria-label="O kursie">
+    <div class="wrap">
+      <p class="statement">Leczenie nie zaczyna się na stole zabiegowym.</p>
+      <p class="statement">I nie kończy się, gdy pacjent wychodzi z pracowni.</p>
+      <p class="statement">Każdy przypadek prowadzimy od pytania „czy i jak leczyć?”, przez rzeczywisty zabieg, do pytania „co dalej z pacjentem?”.</p>
+      <p class="statement">Z komentarzem operatorów, którzy podejmowali te decyzje.</p>
+    </div>
+  </section>
+</div>
+
+<div class="cover-wrap">
+  <div class="sheet sheet-cover" id="cover">
+    <div class="cover-top">
+      <a class="lockup" href="#top" aria-label="Akademia Kardiologii Zabiegowej, na górę strony">
+        <img class="lockup-mark" src="media/akz-mark-ink.svg" width="288" height="116" alt="">
+        <img class="lockup-name" src="media/akz-name-ink.svg" width="150" height="96" alt="">
+      </a>
+      <p class="cover-tag">Listopad<br>2026</p>
+    </div>
+
+    <div class="cover-body">
+      <h2 class="cover-title">Zobacz kardiologię interwencyjną z perspektywy operatora.</h2>
+      <ul class="cover-lines">
+        <li>Od diagnostyki i kwalifikacji.</li>
+        <li>Przez wybór strategii i zabieg.</li>
+        <li>Po farmakoterapię i dalsze prowadzenie.</li>
+      </ul>
+      <div class="cover-actions">
+        <a class="btn btn-primary" href="#zapis">Zapisz się na kurs</a>
+        <a class="btn btn-quiet" href="#program">Zobacz program</a>
+      </div>
+    </div>
+
+    <div class="cover-foot">
+      <img class="cover-foot-mark" src="media/akz-mark-ink.svg" width="288" height="116" alt="">
+      <p>Kierownik naukowy<br>prof. dr hab. n. med. Łukasz Kołtowski, FESC</p>
+      <p>6 sesji, 21 wykładów<br>zabiegi „live in a box”</p>
+      <p class="cover-org"><span>Organizator</span><img src="media/remedium-logo-ink.svg" width="485" height="84" alt="remedium"></p>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="sheet vr">
+    <div class="wrap split">
+      <h2>Nie oglądaj zabiegu z&nbsp;ostatniego rzędu</h2>
+      <div class="prose">
+        <p class="lead">Klasyczne nagranie pokazuje tylko to, co pokazuje kamera. Nagranie 360° pozwala rozejrzeć się po pracowni.</p>
+        <p>Śledzisz nie tylko obraz z monitora, ale też działania operatora i zespołu oraz kolejne etapy procedury. W goglach VR to doświadczenie zbliża się do obserwowania zabiegu bezpośrednio przy stole.</p>
+        <ul class="formats">
+          <li>Wersja 2D</li>
+          <li>Nagrania 360°</li>
+          <li>Wybrane zabiegi w VR</li>
+        </ul>
+        <a class="back-link" href="#top">Wróć do pracowni</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="program">
+    <div class="wrap">
+      <div class="program-head">
+        <h2>Program</h2>
+        <p class="director"><strong>prof. dr hab. n. med. Łukasz Kołtowski, FESC</strong>kierownik naukowy kursu</p>
+      </div>
+
+      <div class="program">
+        <div class="tabs" role="tablist" aria-label="Sesje kursu" aria-orientation="vertical">
+          <button class="tab" role="tab" id="tab-pci" aria-controls="s-pci" aria-selected="true">Złożona PCI<small>4 wykłady</small></button>
+          <button class="tab" role="tab" id="tab-tk" aria-controls="s-tk" aria-selected="false" tabindex="-1">Planowanie PCI w tomografii<small>3 wykłady i panel</small></button>
+          <button class="tab" role="tab" id="tab-wapn" aria-controls="s-wapn" aria-selected="false" tabindex="-1">Zwapniała zmiana wieńcowa<small>4 wykłady</small></button>
+          <button class="tab" role="tab" id="tab-anoca" aria-controls="s-anoca" aria-selected="false" tabindex="-1">Dławica mikrokrążeniowa<small>4 wykłady</small></button>
+          <button class="tab" role="tab" id="tab-ffr" aria-controls="s-ffr" aria-selected="false" tabindex="-1">Ocena czynnościowa<small>3 wykłady</small></button>
+          <button class="tab" role="tab" id="tab-abl" aria-controls="s-abl" aria-selected="false" tabindex="-1">Ablacja<small>3 wykłady</small></button>
+        </div>
+
+        <div class="panels">
+          <article class="panel" role="tabpanel" id="s-pci" aria-labelledby="tab-pci">
+            <h3>Choroba wieńcowa i złożona PCI</h3>
+            <p class="panel-meta">4 wykłady, w tym zabieg 360°</p>
+            <ol class="stages">
+              <li><span class="stage-label">Diagnostyka</span><ul class="talks">
+                <li>Jak poradzić sobie z masywnymi zwapnieniami w tętnicach wieńcowych: drogowskaz skutecznej i bezpiecznej interwencji<span class="who">prof. Janusz Kochman</span></li>
+              </ul></li>
+              <li class="is-case"><span class="stage-label">Zabieg</span><ul class="talks">
+                <li>Mniej metalu, więcej strategii: hybryda DES + DEB w chorobie wielonaczyniowej<span class="who">dr hab. n. med. Grzegorz Sobieszek, prof. Janusz Kochman, prof. Łukasz Kołtowski</span></li>
+              </ul></li>
+              <li><span class="stage-label">Dalsze leczenie</span><ul class="talks">
+                <li>DAPT po PCI: gdzie jest miejsce tikagreloru?<span class="who">prof. Łukasz Kołtowski</span></li>
+                <li>Terapia trójlekowa nadciśnienia: jak optymalizować leczenie obok RDN<span class="who">prof. Łukasz Kołtowski</span></li>
+              </ul></li>
+            </ol>
+          </article>
+
+          <article class="panel" role="tabpanel" id="s-tk" aria-labelledby="tab-tk">
+            <h3>Planowanie angioplastyki wieńcowej na podstawie tomografii komputerowej</h3>
+            <p class="panel-meta">3 wykłady, zabieg 360° i panel dyskusyjny</p>
+            <ol class="stages">
+              <li><span class="stage-label">Diagnostyka</span><ul class="talks">
+                <li>Miejsce tomografii komputerowej w planowaniu angioplastyki wieńcowej<span class="who">lek. Natalia Krajewska</span></li>
+                <li>Look into the future: jak FFR-CT zmienia ścieżki diagnostyczne przewlekłych zespołów wieńcowych<span class="who">prof. Łukasz Kołtowski</span></li>
+              </ul></li>
+              <li class="is-case"><span class="stage-label">Zabieg</span><ul class="talks">
+                <li>Angioplastyka wieńcowa pod kontrolą angio-TK i obrazowania wewnątrznaczyniowego: od planowania po potwierdzenie efektu<span class="who">prof. Tomasz Roleder, prof. Łukasz Kołtowski, lek. Natalia Krajewska</span></li>
+              </ul></li>
+              <li><span class="stage-label">Dyskusja</span><ul class="talks">
+                <li>Panel dyskusyjny ekspertów</li>
+              </ul></li>
+            </ol>
+          </article>
+
+          <article class="panel" role="tabpanel" id="s-wapn" aria-labelledby="tab-wapn">
+            <h3>Zwapniała zmiana wieńcowa: obrazowanie i modyfikacja blaszki</h3>
+            <p class="panel-meta">4 wykłady, w tym zabieg 360°</p>
+            <ol class="stages">
+              <li><span class="stage-label">Diagnostyka</span><ul class="talks">
+                <li>Zwapniała blaszka w CT: zaplanuj PCI, zanim wejdziesz do pracowni<span class="who">lek. Natalia Krajewska</span></li>
+              </ul></li>
+              <li class="is-case"><span class="stage-label">Zabieg</span><ul class="talks">
+                <li>Litotrypsja krok po kroku: jak rozbić wapń i dobrze rozprężyć stent<span class="who">prof. Janusz Kochman, prof. Łukasz Kołtowski, lek. Natalia Krajewska</span></li>
+              </ul></li>
+              <li><span class="stage-label">Dalsze leczenie</span><ul class="talks">
+                <li>Optymalizacja czynników ryzyka i leczenie przeciwdławicowe w PZW<span class="who">prof. Łukasz Kołtowski</span></li>
+                <li>Riwaroksaban w PZW: dual pathway w praktyce<span class="who">prof. Paweł Balsam</span></li>
+              </ul></li>
+            </ol>
+          </article>
+
+          <article class="panel" role="tabpanel" id="s-anoca" aria-labelledby="tab-anoca">
+            <h3>Dławica mikrokrążeniowa i choroba małych naczyń (ANOCA/INOCA)</h3>
+            <p class="panel-meta">4 wykłady, w tym zabieg 360°</p>
+            <ol class="stages">
+              <li><span class="stage-label">Diagnostyka</span><ul class="talks">
+                <li>Diagnostyka i selekcja pacjentów do zabiegu<span class="who">dr n. med. Szymon Włodarczak</span></li>
+                <li>Look into the future: najnowsze doniesienia naukowe<span class="who">prof. Mariusz Tomaniak</span></li>
+              </ul></li>
+              <li class="is-case"><span class="stage-label">Zabieg</span><ul class="talks">
+                <li>Reduktor zatoki wieńcowej: nadzieja w dławicy opornej<span class="who">prof. Marek Grygier, prof. Łukasz Kołtowski</span></li>
+              </ul></li>
+              <li><span class="stage-label">Dalsze leczenie</span><ul class="talks">
+                <li>Dławica bez zwężeń: rola ranolazyny w leczeniu<span class="who">prof. Łukasz Kołtowski</span></li>
+              </ul></li>
+            </ol>
+          </article>
+
+          <article class="panel" role="tabpanel" id="s-ffr" aria-labelledby="tab-ffr">
+            <h3>Angioplastyka wieńcowa i ocena czynnościowa</h3>
+            <p class="panel-meta">3 wykłady, w tym zabieg 360°</p>
+            <ol class="stages">
+              <li><span class="stage-label">Diagnostyka</span><ul class="talks">
+                <li>Ergonomia pracy, multimodalność i bezpieczeństwo w trakcie angioplastyki wieńcowej w ostrych zespołach wieńcowych<span class="who">prof. Aleksandra Gąsecka</span></li>
+              </ul></li>
+              <li class="is-case"><span class="stage-label">Zabieg</span><ul class="talks">
+                <li>Angioplastyka wieńcowa: jak wykorzystać pełen potencjał cyfrowego kokpitu pracowni kardiologii inwazyjnej<span class="who">prof. Łukasz Kołtowski, prof. Aleksandra Gąsecka</span></li>
+              </ul></li>
+              <li><span class="stage-label">Dalsze leczenie</span><ul class="talks">
+                <li>Leczenie przeciwpłytkowe po angioplastyce wieńcowej: od wytycznych po opcje indywidualizacji terapii<span class="who">prof. Mariusz Tomaniak</span></li>
+              </ul></li>
+            </ol>
+          </article>
+
+          <article class="panel" role="tabpanel" id="s-abl" aria-labelledby="tab-abl">
+            <h3>Ablacja</h3>
+            <p class="panel-meta">3 wykłady, w tym zabieg</p>
+            <ol class="stages">
+              <li><span class="stage-label">Diagnostyka</span><ul class="talks">
+                <li>Temat wkrótce<span class="who">prof. Paweł Balsam</span></li>
+              </ul></li>
+              <li class="is-case"><span class="stage-label">Zabieg</span><ul class="talks">
+                <li>Ablacja<span class="who">prof. Piotr Lodziński, prof. Michał Marchel</span></li>
+              </ul></li>
+              <li><span class="stage-label">Dalsze leczenie</span><ul class="talks">
+                <li>Niewydolność serca i migotanie przedsionków<span class="who">prof. Marcin Grabowski</span></li>
+              </ul></li>
+            </ol>
+          </article>
+        </div>
+      </div>
+      <p class="note">Program może ulec zmianie.</p>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <div class="wrap duo">
+      <div>
+        <h2>Co otrzymujesz</h2>
+        <ul class="checks">
+          <li>Praktyczne bloki z najważniejszych obszarów współczesnej kardiologii zabiegowej</li>
+          <li>Rzeczywiste przypadki kliniczne, od diagnostyki i kwalifikacji po dalsze leczenie</li>
+          <li>Nagrania zabiegów „live in a box” z komentarzem ekspertów</li>
+          <li>Materiały 360° z perspektywy operatora, również w formule VR</li>
+          <li>Diagnostykę obrazową i czynnościową, technikę zabiegową i farmakoterapię w jednym miejscu</li>
+          <li>Dyskusję ekspertów o tym, jak elementy przypadku wpływają na ostateczne postępowanie</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Dla kogo</h2>
+        <div class="prose">
+          <p>Dla specjalistów i rezydentów kardiologii oraz lekarzy, którzy chcą lepiej rozumieć współczesne leczenie interwencyjne chorób układu sercowo-naczyniowego.</p>
+          <p>Szczególnie dla osób rozpoczynających szkolenie z kardiologii interwencyjnej lub przygotowujących się do pracy w pracowni hemodynamicznej. A także dla lekarzy prowadzących pacjentów przed zabiegiem i po nim, którzy chcą wiedzieć, dlaczego podjęto daną decyzję i jakie ma ona konsekwencje dla dalszego leczenia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet final" id="zapis">
+    <div class="wrap">
+      <h2>Zobacz więcej niż efekt końcowy zabiegu</h2>
+      <p>Poznaj proces, który do niego prowadzi: diagnostykę, kwalifikację, wybór strategii, przebieg procedury i decyzje podejmowane po wyjściu pacjenta ze szpitala.</p>
+      <!-- TODO: docelowy link do zapisu -->
+      <a class="btn btn-light" href="#" id="signupFinal">Zapisz się na kurs</a>
+    </div>
+  </section>
+</main>
+
+<aside class="signup-bar" id="signupBar" aria-label="Zapis na kurs">
+  <div class="signup-bar-name">
+    <img class="signup-bar-mark" src="media/akz-mark.svg" width="288" height="116" alt="">
+    <span class="signup-bar-text"><strong>Akademia Kardiologii Zabiegowej 2026</strong><span class="signup-bar-sub">Listopad 2026. Kierownik naukowy: prof. Łukasz Kołtowski</span></span>
+  </div>
+  <!-- TODO: docelowy link do zapisu (ten sam co w sekcji końcowej) -->
+  <a class="btn btn-light" href="#">Zapisz się na kurs</a>
+</aside>
+
+<footer class="sheet-foot">
+  <div class="wrap">
+    <span class="org">Organizator <img src="media/remedium-logo.svg" width="485" height="84" alt="remedium"></span>
+    <span>Kurs przeznaczony dla lekarzy</span>
+  </div>
+</footer>
+
+<script>
+// Show the sign-up bar after the hero, hide it while the final sign-up section or footer is visible.
+// Plain script, so it works even when the 360° viewer (module below) cannot start.
+(() => {
+  const bar = document.getElementById('signupBar');
+  if (!('IntersectionObserver' in window)) return;
+  const state = { hero: true, end: false };
+  const update = () => bar.classList.toggle('shown', !state.hero && !state.end);
+  // hidden while the intro or the cover sheet (which has its own sign-up button) is on screen
+  const tops = new Set();
+  const topObs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => e.isIntersecting ? tops.add(e.target) : tops.delete(e.target));
+    state.hero = tops.size > 0; update();
+  });
+  topObs.observe(document.getElementById('top'));
+  topObs.observe(document.getElementById('cover'));
+  const ends = new Set();
+  const endObs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => e.isIntersecting ? ends.add(e.target) : ends.delete(e.target));
+    state.end = ends.size > 0; update();
+  });
+  endObs.observe(document.getElementById('zapis'));
+  endObs.observe(document.querySelector('footer'));
+
+  // The violet light follows the cursor over the bar (mouse/pen only).
+  bar.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
+    const r = bar.getBoundingClientRect();
+    bar.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+    bar.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    bar.classList.add('hot');
+  });
+  bar.addEventListener('pointerleave', () => {
+    bar.style.removeProperty('--mx'); bar.style.removeProperty('--my'); bar.classList.remove('hot');
+  });
+})();
+</script>
+
+<script>
+// Program tabs: one session panel at a time. Without JS every panel stays visible.
+(() => {
+  const list = document.querySelector('.tabs[role="tablist"]');
+  if (!list) return;
+  const tabs = [...list.querySelectorAll('[role="tab"]')];
+  const select = (tab, focus) => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+    // on phones the pills scroll sideways: centre the chosen one (without scrolling the page)
+    if (list.scrollWidth > list.clientWidth) {
+      list.scrollTo({ left: tab.offsetLeft - (list.clientWidth - tab.offsetWidth) / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
+  };
+  const sync = () => list.setAttribute('aria-orientation', matchMedia('(max-width: 860px)').matches ? 'horizontal' : 'vertical');
+  sync(); addEventListener('resize', sync);
+  tabs.forEach((t) => t.addEventListener('click', () => select(t)));
+  list.addEventListener('keydown', (e) => {
+    const i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    const next = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+    if (next) { e.preventDefault(); select(tabs[(i + next + tabs.length) % tabs.length], true); }
+    if (e.key === 'Home') { e.preventDefault(); select(tabs[0], true); }
+    if (e.key === 'End') { e.preventDefault(); select(tabs[tabs.length - 1], true); }
+  });
+  tabs.forEach((t) => { document.getElementById(t.getAttribute('aria-controls')).hidden = t.getAttribute('aria-selected') !== 'true'; });
+})();
+</script>
+
+<script>
+// Scroll choreography. Writes CSS variables only; the 360° module reads window.akzTint for the tint at rest.
+(() => {
+  const root = document.documentElement;
+  const backdrop = document.getElementById('backdrop');
+  const hero = document.getElementById('introHero');
+  const statements = [...document.querySelectorAll('.statement')];
+  const cover = document.getElementById('cover');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  let queued = false;
+  function frame() {
+    queued = false;
+    const vh = innerHeight;
+    // 1) hero: lockup lifts and fades, the room starts to dim
+    const p1 = clamp(scrollY / (vh * 0.8));
+    hero.style.setProperty('--hero-o', (1 - p1 * 1.25).toFixed(3));
+    if (!reduce) {
+      hero.style.setProperty('--hero-y', (-p1 * 60).toFixed(1) + 'px');
+      hero.style.setProperty('--hero-s', (1 - p1 * 0.08).toFixed(3));
+    }
+    // 2) statements light up one by one as they cross the lower part of the screen
+    if (!reduce) statements.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      const t = ease(clamp((vh * 0.88 - r.top) / (vh * 0.38)));
+      el.style.setProperty('--o', (0.16 + 0.84 * t).toFixed(3));
+      el.style.setProperty('--y', ((1 - t) * 24).toFixed(1) + 'px');
+    });
+    // 3) cover sheet rises: the room un-dims and shrinks into a rounded frame
+    const c = cover.getBoundingClientRect();
+    const p3 = ease(clamp((vh - c.top) / (vh * 0.9)));
+    const dim = 0.62 * p1 * (1 - p3);
+    backdrop.style.setProperty('--dim', dim.toFixed(3));
+    const inset = (innerWidth < 820 ? 8 : 20) * p3, radius = (innerWidth < 820 ? 18 : 32) * p3;
+    backdrop.style.setProperty('--inset', inset.toFixed(1) + 'px');
+    backdrop.style.setProperty('--radius', radius.toFixed(1) + 'px');
+    // brand tint: full on the hero, lighter once the room is scenery behind the sheets
+    window.akzTint = 1 - 0.38 * p3;
+  }
+  const request = () => { if (!queued) { queued = true; requestAnimationFrame(frame); } };
+  addEventListener('scroll', request, { passive: true });
+  addEventListener('resize', request);
+  frame();
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+const viewer = document.getElementById('viewer');
+const strip = document.getElementById('strip');
+const windows = strip.querySelectorAll('.strip-window');
+const hint = document.getElementById('hint');
+const playToggle = document.getElementById('playToggle');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// View state in degrees. lon 0..360 maps to the panorama's horizontal axis (u = lon / 360).
+// Start facing the operator, the table and the angiography monitors.
+const view = { lon: 162, lat: -8, vLon: 0, vLat: 0 };
+
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
+} catch (e) {
+  // No WebGL: the static poster stays visible and the page still works.
+  strip.hidden = true; hint.hidden = true;
+  throw e;
+}
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+viewer.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, 1, 1, 1100);
+const geometry = new THREE.SphereGeometry(500, 72, 48);
+geometry.scale(-1, 1, 1);
+const material = new THREE.MeshBasicMaterial();
+scene.add(new THREE.Mesh(geometry, material));
+
+// Brand treatment from the AKZ key visual: footage "darkened" into the violet-burgundy field
+// (same as the CSS --brand-field). Done in WebGL with a MIN blend, because CSS mix-blend-mode
+// over a WebGL canvas is dropped by some browsers. uStrength 1 = full tint, 0 = true colour.
+const tintScene = new THREE.Scene();
+const tintCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const tint = new THREE.ShaderMaterial({
+  uniforms: { uStrength: { value: 1 }, uTime: { value: 0 }, uShift: { value: new THREE.Vector2() } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: `
+    varying vec2 vUv; uniform float uStrength; uniform float uTime; uniform vec2 uShift;
+    vec3 hex(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
+    float blob(vec2 p, vec2 c, vec2 r){ return length((p - c) / r); }
+    void main(){
+      vec2 p = vec2(vUv.x, 1.0 - vUv.y);
+      vec3 col = p.x < 0.55 ? mix(hex(59.,15.,99.), hex(74.,10.,69.), p.x / 0.55)
+                            : mix(hex(74.,10.,69.), hex(68.,0.,27.), (p.x - 0.55) / 0.45);
+      // Glows drift slowly on their own; the violet one leans toward the cursor (uShift), the plum one away.
+      vec2 c2 = vec2(0.62, 0.30) + vec2(cos(uTime * 0.09), sin(uTime * 0.12)) * vec2(0.06, 0.05) - uShift * 0.4;
+      float d2 = blob(p, c2, vec2(0.45, 0.70));
+      col = mix(col, hex(84.,16.,79.), 0.95 * (1.0 - smoothstep(0.0, 0.75, d2)));
+      vec2 c1 = vec2(0.22, 0.58) + vec2(sin(uTime * 0.13), cos(uTime * 0.10)) * vec2(0.07, 0.05) + uShift;
+      float d1 = blob(p, c1, vec2(0.55, 0.75) * (1.0 + 0.04 * sin(uTime * 0.21)));
+      float a1 = d1 < 0.45 ? mix(1.0, 0.55, d1 / 0.45) : 0.55 * (1.0 - smoothstep(0.45, 0.75, d1));
+      col = mix(col, hex(74.,41.,221.), a1);
+      gl_FragColor = vec4(mix(vec3(1.0), col, uStrength), 1.0);
+    }`,
+  depthTest: false, depthWrite: false,
+  blending: THREE.CustomBlending, blendEquation: THREE.MinEquation,
+});
+tintScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), tint));
+renderer.autoClear = false;
+
+// Poster first, so dragging works immediately; video replaces it once it is playing.
+new THREE.TextureLoader().load('media/hero360-poster.jpg', (t) => {
+  t.colorSpace = THREE.SRGBColorSpace;
+  if (!material.map) { material.map = t; material.needsUpdate = true; }
+  viewer.classList.add('ready');
+});
+
+// Phones and weaker GPUs get the 2560px file, everything else the 3840px one.
+const maxTex = renderer.capabilities.maxTextureSize;
+const small = Math.min(screen.width, screen.height) < 768 || maxTex < 4096; // phones and GPUs that cannot hold a 3840px texture get the 2560px file
+const video = document.createElement('video');
+Object.assign(video, { muted: true, loop: true, playsInline: true, preload: 'auto' });
+video.setAttribute('muted', ''); video.setAttribute('playsinline', '');
+// If the video moves to a CDN, add video.crossOrigin = 'anonymous' and CORS headers there.
+video.src = small ? 'media/hero360-sd.mp4' : 'media/hero360-hd.mp4';
+
+video.addEventListener('playing', () => {
+  if (!(material.map instanceof THREE.VideoTexture)) {
+    const vt = new THREE.VideoTexture(video);
+    vt.colorSpace = THREE.SRGBColorSpace;
+    vt.minFilter = THREE.LinearFilter; vt.generateMipmaps = false;
+    material.map = vt; material.needsUpdate = true;
+    viewer.classList.add('ready');
+  }
+  playToggle.textContent = 'Zatrzymaj nagranie';
+  playToggle.hidden = false;
+});
+video.addEventListener('pause', () => { playToggle.textContent = 'Odtwórz nagranie'; });
+
+let userPaused = reduceMotion;
+function tryPlay() {
+  video.play().catch(() => { playToggle.hidden = false; }); // e.g. iOS Low Power Mode blocks autoplay
+}
+if (reduceMotion) playToggle.hidden = false; else tryPlay();
+playToggle.addEventListener('click', () => {
+  if (video.paused) { userPaused = false; video.play(); } else { userPaused = true; video.pause(); }
+});
+
+// ---- Interaction ----
+let dragging = false, lastX = 0, lastY = 0, lastT = 0, lastInput = performance.now(), interacted = false;
+const degPerPx = () => camera.fov / viewer.clientHeight;
+
+const hero = document.getElementById('top');
+
+// Cursor position over the hero (0..1, top-left origin), smoothed in tick(); mouse/pen only.
+const glow = { x: 0.22, y: 0.58, tx: 0.22, ty: 0.58 };
+const GLOW_REST = { x: 0.22, y: 0.58 };
+addEventListener('pointermove', (e) => {
+  if (e.pointerType === 'touch') return;
+  const r = viewer.getBoundingClientRect();
+  glow.tx = (e.clientX - r.left) / r.width; glow.ty = (e.clientY - r.top) / r.height;
+});
+document.documentElement.addEventListener('pointerleave', () => { glow.tx = GLOW_REST.x; glow.ty = GLOW_REST.y; });
+function markInteracted() {
+  lastInput = performance.now();
+  hero.classList.add('looking');
+  if (!interacted) { interacted = true; hint.classList.add('gone'); }
+}
+
+viewer.addEventListener('pointerdown', (e) => {
+  if (e.button !== 0) return;
+  dragging = true; lastX = e.clientX; lastY = e.clientY; lastT = performance.now();
+  view.vLon = view.vLat = 0;
+  viewer.setPointerCapture(e.pointerId); viewer.classList.add('dragging');
+  markInteracted();
+});
+viewer.addEventListener('pointermove', (e) => {
+  if (!dragging) return;
+  const now = performance.now(), dt = Math.max(now - lastT, 1);
+  const k = degPerPx();
+  const dLon = -(e.clientX - lastX) * k;
+  // Touch only pans horizontally so vertical swipes still scroll the page (touch-action: pan-y).
+  const dLat = e.pointerType === 'mouse' ? (e.clientY - lastY) * k : 0;
+  view.lon += dLon; view.lat += dLat;
+  view.vLon = dLon / dt * 16; view.vLat = dLat / dt * 16;
+  lastX = e.clientX; lastY = e.clientY; lastT = now;
+  markInteracted();
+});
+const endDrag = () => { dragging = false; viewer.classList.remove('dragging'); lastInput = performance.now(); };
+viewer.addEventListener('pointerup', endDrag);
+viewer.addEventListener('pointercancel', () => { endDrag(); view.vLon = view.vLat = 0; });
+
+viewer.addEventListener('keydown', (e) => {
+  const step = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, 8], ArrowDown: [0, -8] }[e.key];
+  if (!step) return;
+  e.preventDefault();
+  view.vLon = step[0] / 8; view.vLat = step[1] / 8;
+  markInteracted();
+});
+
+// Panorama strip: click or drag to jump to that part of the room.
+const STRIP_V0 = 0.2, STRIP_V1 = 0.8; // vertical slice of the panorama the strip shows (matches its CSS crop)
+function stripJump(e) {
+  const r = strip.getBoundingClientRect();
+  const u = (e.clientX - r.left) / r.width, v = STRIP_V0 + (e.clientY - r.top) / r.height * (STRIP_V1 - STRIP_V0);
+  view.lon = u * 360; view.lat = 90 - v * 180; view.vLon = view.vLat = 0;
+  markInteracted();
+}
+let stripDrag = false;
+strip.addEventListener('pointerdown', (e) => { stripDrag = true; strip.setPointerCapture(e.pointerId); stripJump(e); });
+strip.addEventListener('pointermove', (e) => { if (stripDrag) stripJump(e); });
+strip.addEventListener('pointerup', () => { stripDrag = false; });
+strip.addEventListener('pointercancel', () => { stripDrag = false; });
+
+// ---- Layout ----
+function resize() {
+  const w = viewer.clientWidth, h = viewer.clientHeight;
+  camera.aspect = w / h;
+  camera.fov = w < h ? 92 : 72; // wider field of view on portrait phones
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h, false);
+}
+addEventListener('resize', resize);
+resize();
+
+// The strip background is sized to its width, so crop it to match STRIP_V0..STRIP_V1.
+function layoutStrip() {
+  const W = strip.clientWidth, H = strip.clientHeight;
+  const fullH = W / 2, visibleH = fullH * (STRIP_V1 - STRIP_V0);
+  const scale = H / visibleH;
+  strip.style.backgroundSize = `${W * scale}px ${fullH * scale}px`;
+  strip.style.backgroundPosition = `${(W - W * scale) / 2}px ${-fullH * scale * STRIP_V0}px`;
+  strip.dataset.scale = scale;
+}
+addEventListener('resize', layoutStrip);
+layoutStrip();
+
+function updateStrip() {
+  const W = strip.clientWidth, H = strip.clientHeight, scale = +strip.dataset.scale;
+  const vfov = camera.fov, hfov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(vfov / 2)) * camera.aspect));
+  const panoW = W * scale, offsetX = (W - panoW) / 2;
+  const u = ((view.lon % 360) + 360) % 360 / 360;
+  const ww = Math.min(hfov / 360, 1) * panoW;
+  const v = (90 - view.lat) / 180, vh = vfov / 180;
+  const top = ((v - vh / 2) - STRIP_V0) / (STRIP_V1 - STRIP_V0) * H;
+  const hh = vh / (STRIP_V1 - STRIP_V0) * H;
+  const x = offsetX + u * panoW - ww / 2;
+  windows.forEach((el, i) => {
+    el.style.width = ww + 'px'; el.style.height = hh + 'px'; el.style.top = 0;
+    el.style.transform = `translate(${x + (i ? (x > W / 2 ? -panoW : panoW) : 0)}px, ${top}px)`;
+  });
+}
+
+// ---- Render loop (paused while the hero is off-screen) ----
+let visible = true, last = performance.now();
+new IntersectionObserver(([entry]) => {
+  visible = entry.isIntersecting;
+  if (visible) { last = performance.now(); if (!userPaused) tryPlay(); requestAnimationFrame(tick); }
+  else video.pause();
+}, { threshold: 0.02 }).observe(viewer);
+
+const target = new THREE.Vector3();
+function tick(now) {
+  if (!visible) return;
+  const dt = Math.min((now - last) / 1000, 0.1); last = now;
+
+  if (!dragging) {
+    view.lon += view.vLon; view.lat += view.vLat;
+    const decay = reduceMotion ? 0 : Math.pow(0.9, dt * 60);
+    view.vLon *= decay; view.vLat *= decay;
+    // After a few idle seconds, drift slowly so the room reveals itself.
+    const idle = (now - lastInput) / 1000;
+    if (!reduceMotion && idle > 3) view.lon += Math.min((idle - 3) / 2, 1) * 3 * dt;
+    if (idle > 2.5 && !stripDrag) hero.classList.remove('looking');
+  }
+  view.lat = Math.max(-75, Math.min(75, view.lat));
+
+  const phi = THREE.MathUtils.degToRad(90 - view.lat), theta = THREE.MathUtils.degToRad(view.lon);
+  target.set(Math.sin(phi) * Math.cos(theta), Math.cos(phi), Math.sin(phi) * Math.sin(theta));
+  camera.lookAt(target);
+  // While someone is looking around, the tint eases off so the room reads in true colour.
+  if (!reduceMotion) {
+    tint.uniforms.uTime.value = now / 1000;
+    const k = Math.min(1, dt * 1.8);
+    glow.x += (glow.tx - glow.x) * k; glow.y += (glow.ty - glow.y) * k;
+    tint.uniforms.uShift.value.set((glow.x - GLOW_REST.x) * 0.45, (glow.y - GLOW_REST.y) * 0.45);
+  }
+  // lighter resting tint than the full-bleed hero: here the room is scenery around the sheets
+  const tintTarget = hero.classList.contains('looking') ? 0.15 : (window.akzTint ?? 1);
+  const u = tint.uniforms.uStrength;
+  u.value += (tintTarget - u.value) * Math.min(1, dt * (tintTarget < u.value ? 5 : 1.6));
+  renderer.clear();
+  renderer.render(scene, camera);
+  renderer.render(tintScene, tintCamera);
+  updateStrip();
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
