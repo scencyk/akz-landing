@@ -1,0 +1,17 @@
+# Only the landing page and its tools are versioned. Raw footage, exports,
+# source documents and partner files stay local (size, and they aren't public material).
+/*
+!/.gitignore
+!/README.md
+!/landing/
+!/tools/
+
+# the VR icon is a licensed stock asset: it lives inline in film.html only, not as a standalone file
+/landing/media/icon-vr.svg
+
+# compiled helpers (build with swiftc, see the header of each .swift file)
+/tools/logo-mono
+/tools/transcode
+/tools/probe
+
+.DS_Store
