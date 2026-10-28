@@ -291,7 +291,7 @@ html.js .sessions { display: none; }
 
 /* Sign-up bar: appears once the hero is behind you, hides at the sign-up section */
 .bar {
-  position: fixed; z-index: 20; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); width: min(560px, calc(100% - 2 * var(--gutter)));
+  position: fixed; z-index: 20; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); width: min(640px, calc(100% - 2 * var(--gutter)));
   display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 22px; border-radius: 999px; color: #fff;
   background: linear-gradient(90deg, rgba(74,41,221,.82), rgba(68,0,27,.84));
   -webkit-backdrop-filter: blur(18px) saturate(1.5); backdrop-filter: blur(18px) saturate(1.5);
@@ -300,9 +300,14 @@ html.js .sessions { display: none; }
   transition: transform 500ms var(--ease-drawer), visibility 0s linear 500ms;
 }
 .bar.shown { transform: translate(-50%, 0); visibility: visible; transition: transform 500ms var(--ease-drawer), visibility 0s; }
-.bar img { width: 56px; height: auto; display: block; }
+.bar-copy { min-width: 0; display: flex; flex-direction: column; gap: 3px; line-height: 1.2; }
+.bar-copy strong { font-size: 15px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-copy > span { font-size: 13px; color: rgba(255,255,255,.72); white-space: nowrap; }
+.bar .btn { flex: none; }
 .bar .btn { min-height: 44px; padding: 0 22px; }
-@media (max-width: 520px) { .bar .btn { flex: 1 1 auto; } .bar-long { display: none; } .sessions summary { grid-template-columns: minmax(0, 1fr) 1ch; row-gap: 4px; } .sessions summary small { grid-row: 2; grid-column: 1; } }
+@media (max-width: 520px) { .bar { gap: 12px; padding-left: 18px; } .bar-copy strong { font-size: 14px; } .bar-copy > span { font-size: 12px; } .bar-long { display: none; } .sessions summary { grid-template-columns: minmax(0, 1fr) 1ch; row-gap: 4px; } .sessions summary small { grid-row: 2; grid-column: 1; } }
+/* the narrowest phones: tighter bar, and the date alone on the second line */
+@media (max-width: 380px) { .bar { gap: 10px; padding-left: 16px; } .bar .btn { padding: 0 12px; } .bar-copy strong { font-size: 13px; } .bar-pre { display: none; } .bar-copy > span { text-transform: capitalize; } }
 @media (prefers-reduced-motion: reduce) { .bar, .bar.shown { transition: none; } }
 /* ---------- Page-load entrance: the headline first, then everything else ----------
    1) "Przenieś się do sali zabiegowej." arrives letter by letter out of a blur (after Motion Primitives' TextEffect,
@@ -772,7 +777,7 @@ html.reveal-on .expert img.is-loaded { opacity: 1; }
 </main>
 
 <aside class="bar dark" id="bar" aria-label="Powiadomienie o premierze kursu">
-  <img src="media/akz-mark.svg" width="288" height="116" alt="Akademia Kardiologii Zabiegowej">
+  <p class="bar-copy"><strong>Bezpłatny kurs<span class="bar-long"> kardiologii interwencyjnej</span></strong><span><span class="bar-pre">Premiera: </span>listopad 2026</span></p>
   <a class="btn btn-light" href="#zapis" data-goto-signup>Powiadom mnie<span class="bar-long">&nbsp;o premierze</span></a>
 </aside>
 
