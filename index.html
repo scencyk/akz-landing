@@ -208,19 +208,29 @@ h1, h2, h3, p, ul { margin: 0; }
   .format-plus { padding-top: 34px; }
 }
 
-/* Experts: three faces of the course, quiet and typographic */
+/* Experts: the course director on a row of his own, then the faculty in an even grid, quiet and typographic */
 .experts { background: var(--paper); padding-block: clamp(48px, 7vw, 88px); }
 .experts h2 { font-size: 15px; font-weight: 500; letter-spacing: 0; color: var(--ink); }
-.expert-list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); }
+.expert-list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(28px, 3vw, 40px) clamp(20px, 3vw, 40px); }
 .expert { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding-top: 20px; border-top: 1px solid rgba(35,8,28,.16); }
-.expert img { width: clamp(96px, 9vw, 128px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; display: block; margin-bottom: 14px; }
+.expert img, .expert-ph { width: clamp(80px, 7vw, 104px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; display: block; margin-bottom: 14px; }
+/* no photo yet: initials on the same soft disc the photos load onto */
+.expert-ph { display: grid; place-items: center; background: #E9DEE7; color: var(--muted); font-size: clamp(22px, 2vw, 28px); font-weight: 500; letter-spacing: .02em; }
 .expert-name { font-size: 17px; line-height: 1.25; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
-.expert-role { font-size: 14px; line-height: 1.35; color: var(--muted); }
+.expert-role { font-size: 14px; line-height: 1.35; color: var(--muted); text-wrap: pretty; }
+.expert--lead { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(20px, 3vw, 32px); row-gap: 4px; align-items: center; }
+.expert--lead img { grid-row: 1 / span 2; margin: 0; }
+.expert--lead .expert-name { align-self: end; font-size: clamp(19px, 1.8vw, 22px); }
+.expert--lead .expert-role { align-self: start; max-width: 36ch; }
+@media (max-width: 1080px) { .expert-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 860px) {
   .expert-list { grid-template-columns: 1fr; gap: 0; }
   .expert { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; row-gap: 2px; align-items: center; padding-block: 16px; }
-  .expert img { grid-row: 1 / span 2; width: 72px; margin: 0; }
+  .expert img, .expert-ph { grid-row: 1 / span 2; width: 64px; margin: 0; }
+  .expert-ph { font-size: 20px; }
   .expert-name { align-self: end; } .expert-role { align-self: start; }
+  .expert-name:last-child { grid-row: 1 / span 2; align-self: center; }
+  .expert--lead .expert-name { font-size: 17px; }
 }
 
 /* Dark hero: deep ink, light type; the window glows against it */
@@ -632,20 +642,65 @@ html.reveal-on .expert img.is-loaded { opacity: 1; }
     <div class="wrap">
       <h2 id="expertsTitle">Eksperci</h2>
       <ul class="expert-list">
-        <li class="expert">
+        <li class="expert expert--lead">
           <img src="media/experts/koltowski.jpg" width="360" height="360" alt="" loading="lazy">
           <p class="expert-name">prof. dr hab. n. med. Łukasz Kołtowski, FESC</p>
-          <p class="expert-role">Kierownik naukowy kursu</p>
+          <p class="expert-role">Kierownik naukowy kursu, specjalista kardiologii i leczenia chorób serca</p>
         </li>
         <li class="expert">
           <img src="media/experts/kochman.jpg" width="360" height="360" alt="" loading="lazy">
-          <p class="expert-name">prof. Janusz Kochman</p>
-          <p class="expert-role">Złożona PCI, zwapniała zmiana wieńcowa</p>
+          <p class="expert-name">prof. dr hab. n. med. Janusz Kochman</p>
+          <p class="expert-role">Specjalista chorób wewnętrznych i kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/sobieszek.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">dr hab. n. med. Grzegorz Sobieszek</p>
+          <p class="expert-role">Specjalista chorób wewnętrznych i kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/roleder.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">prof. dr hab. n. med. Tomasz Roleder</p>
+          <p class="expert-role">Specjalista kardiologii</p>
         </li>
         <li class="expert">
           <img src="media/experts/balsam.jpg" width="360" height="360" alt="" loading="lazy">
-          <p class="expert-name">prof. Paweł Balsam</p>
-          <p class="expert-role">Migotanie przedsionków, ablacja</p>
+          <p class="expert-name">prof. dr hab. n. med. Paweł Balsam</p>
+          <p class="expert-role">Specjalista chorób wewnętrznych i kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/slawek-szmyt.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">dr n. med. Sylwia Sławek-Szmyt</p>
+          <p class="expert-role">Specjalistka kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/grygier.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">prof. dr hab. n. med. Marek Grygier</p>
+          <p class="expert-role">Specjalista kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/tomaniak.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">prof. dr hab. n. med. Mariusz Tomaniak</p>
+          <p class="expert-role">Specjalista kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/gasecka.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">dr hab. n. med. Aleksandra Gąsecka-van der Pol</p>
+          <p class="expert-role">Specjalistka kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/lodzinski.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">dr hab. n. med. Piotr Lodziński</p>
+          <p class="expert-role">Specjalista kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/peller.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">dr n. med. Michał Peller</p>
+          <p class="expert-role">Specjalista kardiologii</p>
+        </li>
+        <li class="expert">
+          <img src="media/experts/grabowski.jpg" width="360" height="360" alt="" loading="lazy">
+          <p class="expert-name">prof. dr hab. n. med. Marcin Grabowski</p>
+          <p class="expert-role">Specjalista kardiologii</p>
         </li>
       </ul>
     </div>
